@@ -6,15 +6,21 @@ export default class App extends React.Component {
   constructor() {
     super()
     this.state = {
+//      isLoading: true,
       loggedInUser: 1,
       notes: []
     }
   }
 
   async componentDidMount() {
-    const response = await fetch(`http://note-jar.herokuapp.com/users/${this.state.loggedInUser}/notes`)
-    const notes = await response.json()
-    this.setState({ notes })
+    try {
+      const response = await fetch(`http://note-jar.herokuapp.com/users/${this.state.loggedInUser}/notes`)
+      const notes = await response.json()
+      this.setState({ notes })
+    }
+    catch (err) {
+      console.error(err)
+    }
   }
 
   render() {
