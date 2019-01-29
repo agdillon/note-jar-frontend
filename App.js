@@ -3,6 +3,11 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import NoteList from './components/NoteList'
 import Login from './components/Login'
+import Registration from './components/Registration'
+
+const LOGIN = 'Login'
+const REGISTRATION = 'Registration'
+const NOTE_LIST = 'NoteList'
 
 export default class App extends React.Component {
   constructor() {
@@ -11,11 +16,13 @@ export default class App extends React.Component {
 //      isLoading: true,
       loggedInUser: null,
       notes: [],
-      error: null
+      error: null,
+      screen: REGISTRATION
     }
   }
 
   async componentDidMount() {
+    // check whether user is logged in (jwt) and set this.state.screen
     try {
       const response = await fetch(`http://note-jar.herokuapp.com/users/${this.state.loggedInUser}/notes`)
       const notes = await response.json()
@@ -40,7 +47,7 @@ export default class App extends React.Component {
     console.log(body)
 
     if (response.status === 200) {
-      // store jwt in AsyncStorage
+      // store jwt in AsyncStorage - TODO
       let user_id = jwtDecode(body.token).user_id
 
       this.setState({ loggedInUser: user_id, error: null })
@@ -50,11 +57,19 @@ export default class App extends React.Component {
     }
   }
 
+  regHandler = async (formData) => {
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        {this.state.loggedInUser ? <NoteList notes={this.state.notes} /> : null}
-        <Login loginHandler={this.loginHandler} error={this.state.error} />
+        {this.state.screen === NOTE_LIST ? <NoteList notes={this.state.notes} /> : null}
+        {this.state.screen === LOGIN ?
+          <Login loginHandler={this.loginHandler} error={this.state.error} />
+          : null}
+        {this.state.screen === REGISTRATION ?
+          <Registration regHandler={this.regHandler} error={this.state.error} />
+          : null}
       </View>
     )
   }
