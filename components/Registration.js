@@ -9,5 +9,11 @@ export default class Registration extends React.Component {
 
   render() {
     // registration form
+
+    // email,
+    // password,
+    // phone,
+    // daily_method,
+    // daily_time
   }
 }

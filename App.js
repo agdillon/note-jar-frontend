@@ -1,14 +1,17 @@
+import jwtDecode from 'jwt-decode'
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import NoteList from './components/NoteList'
+import Login from './components/Login'
 
 export default class App extends React.Component {
   constructor() {
     super()
     this.state = {
 //      isLoading: true,
-      loggedInUser: 1,
-      notes: []
+      loggedInUser: null,
+      notes: [],
+      error: null
     }
   }
 
@@ -23,10 +26,35 @@ export default class App extends React.Component {
     }
   }
 
+  loginHandler = async (formData) => {
+    let response = await fetch(`http://note-jar.herokuapp.com/auth/login`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+
+    let body = await response.json()
+    console.log(body)
+
+    if (response.status === 200) {
+      // store jwt in AsyncStorage
+      let user_id = jwtDecode(body.token).user_id
+
+      this.setState({ loggedInUser: user_id, error: null })
+    }
+    else {
+      this.setState({ error: body })
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <NoteList notes={this.state.notes} />
+        {this.state.loggedInUser ? <NoteList notes={this.state.notes} /> : null}
+        <Login loginHandler={this.loginHandler} error={this.state.error} />
       </View>
     )
   }
