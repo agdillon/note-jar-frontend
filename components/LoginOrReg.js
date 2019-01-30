@@ -1,6 +1,6 @@
 import React from 'react'
-import { StyleSheet, View, Switch } from 'react-native'
-import { Container, Content, Text, Form, Input, Label, Button, Item, H2 } from 'native-base'
+import { StyleSheet, View, Switch, TouchableNativeFeedback } from 'react-native'
+import { Container, Content, Text, Form, Input, Label, Button, Item } from 'native-base'
 
 const LOGIN = 'Login'
 const REGISTRATION = 'Registration'
@@ -31,13 +31,18 @@ export default class LoginOrReg extends React.Component {
     this.setState({ email: '', password: '', dailyNoteOn: false })
   }
 
+  toggleScreen = () => {
+    if (this.state.screen === REGISTRATION) this.setState({ screen: LOGIN })
+    if (this.state.screen === LOGIN) this.setState({ screen: REGISTRATION })
+  }
+
   render() {
     return (
       <Container>
         <Content contentContainerStyle={styles.contentContainer}>
-          <H2>
+          <Text>
             {this.state.screen === REGISTRATION ? 'Create an account' : 'Sign in to your account'}
-          </H2>
+          </Text>
 
           {this.props.error ? <Text style={{color: "red"}}> {this.props.error.message} </Text> : null}
 
@@ -103,7 +108,15 @@ export default class LoginOrReg extends React.Component {
             </Button>
           </Form>
 
-          {/* toggle between login and reg screens - TODO */}
+          {/*toggle between login and registration screens*/}
+          <TouchableNativeFeedback onPress={this.toggleScreen}>
+            <View>
+              <Text style={{ color: 'blue' }}>
+                {this.state.screen === REGISTRATION ? 'Sign in to your account' : 'Create a new account'}
+              </Text>
+            </View>
+          </TouchableNativeFeedback>
+
         </Content>
       </Container>
     )
@@ -119,7 +132,7 @@ const styles = StyleSheet.create({
   },
   dailyNoteContainer: {
     height: 50,
-    width: 150,
+    width: 200,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
