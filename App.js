@@ -2,8 +2,7 @@ import jwtDecode from 'jwt-decode'
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import NoteList from './components/NoteList'
-import Login from './components/Login'
-import Registration from './components/Registration'
+import LoginOrReg from './components/LoginOrReg'
 
 const LOGIN = 'Login'
 const REGISTRATION = 'Registration'
@@ -33,8 +32,10 @@ export default class App extends React.Component {
     }
   }
 
-  loginHandler = async (formData) => {
-    let response = await fetch(`http://note-jar.herokuapp.com/auth/login`, {
+  loginOrRegHandler = async (formData, isNewUser) => {
+    let route = isNewUser ? 'register' : 'login'
+
+    let response = await fetch(`http://note-jar.herokuapp.com/auth/${route}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -44,7 +45,6 @@ export default class App extends React.Component {
     })
 
     let body = await response.json()
-    console.log(body)
 
     if (response.status === 200) {
       // store jwt in AsyncStorage - TODO
@@ -57,19 +57,16 @@ export default class App extends React.Component {
     }
   }
 
-  regHandler = async (formData) => {
-  }
-
   render() {
     return (
       <View style={styles.container}>
         {this.state.screen === NOTE_LIST ? <NoteList notes={this.state.notes} /> : null}
-        {this.state.screen === LOGIN ?
-          <Login loginHandler={this.loginHandler} error={this.state.error} />
-          : null}
-        {this.state.screen === REGISTRATION ?
-          <Registration regHandler={this.regHandler} error={this.state.error} />
-          : null}
+        {this.state.screen === LOGIN || this.state.screen === REGISTRATION ?
+           <LoginOrReg
+              regHandler={this.loginOrRegHandler}
+              error={this.state.error}
+              screen={this.state.screen}
+            /> : null}
       </View>
     )
   }

@@ -1,56 +1,77 @@
 import React from 'react'
 import { StyleSheet, Text, View, TextInput, Switch, Button } from 'react-native'
 
-export default class Registration extends React.Component {
+const LOGIN = 'Login'
+const REGISTRATION = 'Registration'
+
+export default class LoginOrReg extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       email: '',
       password: '',
-      dailyNoteOn: false
+      dailyNoteOn: false,
+      screen: this.props.screen
     }
   }
 
   onSubmitForm = () => {
     let { email, password } = this.state
+    let formData = { email, password }
+    let isNewUser = false
 
-    this.props.loginHandler({ email, password })
+    if (this.state.screen === REGISTRATION) {
+      formData.daily_method = this.state.dailyNoteOn ? 'push' : null
+      isNewUser = true
+    }
 
-    this.setState({ email: '', password: '' })
+    this.props.loginOrRegHandler(formData, isNewUser)
+
+    this.setState({ email: '', password: '', dailyNoteOn: false })
   }
 
   render() {
     return (
       <View style={styles.container}>
-      {this.props.error ? <Text style={{color: "red"}}> {this.props.error.message} </Text> : null}
+        <Text>
+          {this.state.screen === REGISTRATION ? 'Create an account' : 'Sign in to your account'}
+        </Text>
+
+        {this.props.error ? <Text style={{color: "red"}}> {this.props.error.message} </Text> : null}
+
         <TextInput
           value={this.state.email}
-          textContentType="emailAddress"
           onChangeText={email => this.setState({ email })}
+          onSubmitEditing={this.onSubmitForm}
+          textContentType="emailAddress"
           keyboardType="email-address"
           maxLength={254}
           placeholder="Email Address"
-          onSubmitEditing={this.onSubmitForm}
           style={styles.formField}
         />
 
         <TextInput
           value={this.state.password}
-          textContentType="password"
           onChangeText={password => this.setState({ password })}
-          secureTextEntry
-          placeholder="Password"
           onSubmitEditing={this.onSubmitForm}
+          secureTextEntry
+          textContentType="password"
+          placeholder="Password"
           style={styles.formField}
         />
 
         {/*minimum feature for daily is going to be push notification at 9 am (device time)
         when on, send to server daily_method = "push"*/}
-        <Text>Daily Note</Text>
-        <Switch
-          value={this.state.dailyNoteOn}
-          onValueChange={dailyNoteOn => this.setState({ dailyNoteOn })}
-        />
+        {this.state.screen === REGISTRATION ?
+          <View style={styles.dailyNoteContainer}>
+            <Text style={{ flex:1 }}>Daily Note</Text>
+            <Switch
+              value={this.state.dailyNoteOn}
+              onValueChange={dailyNoteOn => this.setState({ dailyNoteOn })}
+              style={{ flex:1 }}
+            />
+          </View>
+          : null}
 
         {/*phone - add some cool JavaScript to autoformat while typing
         <TextInput
@@ -75,6 +96,8 @@ export default class Registration extends React.Component {
           title="Submit"
           color="#841584"
         />
+
+        {/* toggle between login and reg screens - TODO */}
       </View>
     )
   }
@@ -87,8 +110,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  dailyNoteContainer: {
+    height: 50,
+    width: 150,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   formField: {
     height: 40,
+    width: 200,
     borderColor: 'gray',
     borderWidth: 1
   }
