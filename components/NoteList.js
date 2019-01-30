@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, FlatList } from 'react-native'
 function NoteList({ notes }) {
   return (
     <View style={styles.container}>
+      <Text>All Notes</Text>
       <FlatList
         data={notes}
         keyExtractor={note => note.note_id.toString()}

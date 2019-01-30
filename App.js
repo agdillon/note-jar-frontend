@@ -1,12 +1,13 @@
 import jwtDecode from 'jwt-decode'
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, AsyncStorage } from 'react-native'
 import { Container, Content, Text, Spinner } from 'native-base'
 import NoteList from './components/NoteList'
 import LoginOrReg from './components/LoginOrReg'
 
 const LOGIN = 'Login'
 const REGISTRATION = 'Registration'
+const DASHBOARD = 'Dashboard'
 const NOTE_LIST = 'NoteList'
 
 export default class App extends React.Component {
@@ -17,7 +18,7 @@ export default class App extends React.Component {
       loggedInUser: null,
       notes: [],
       error: null,
-      screen: REGISTRATION
+      screen: null
     }
   }
 
@@ -29,14 +30,33 @@ export default class App extends React.Component {
   }
 
   async componentDidMount() {
-    // check whether user is logged in (jwt) and set this.state.screen - TODO
+    // check for JWT and set screen and loggedInUser
+    let token
+
     try {
-      const response = await fetch(`http://note-jar.herokuapp.com/users/${this.state.loggedInUser}/notes`)
-      const notes = await response.json()
-      this.setState({ notes, isLoading: false })
+      token = await AsyncStorage.getItem('Token')
+      console.log(`token ${token}`)
+      if (token !== null) {
+        let user_id = jwtDecode(token).user_id
+        this.setState({ screen: NOTE_LIST, loggedInUser: user_id })
+      }
+      else {
+        this.setState({ screen: LOGIN })
+      }
     }
-    catch (err) {
-      console.error(err)
+    catch (error) {
+      this.setState({ error })
+    }
+
+    // get notes
+    try {
+      const response = await fetch(`http://note-jar.herokuapp.com/users/${this.state.loggedInUser}/notes`,
+        { headers: { Authorization: `Bearer ${token}` } })
+      const notes = await response.json()
+      this.setState({ notes, isLoading: false, error: null })
+    }
+    catch (error) {
+      this.setState({ error })
     }
   }
 
@@ -53,12 +73,16 @@ export default class App extends React.Component {
     })
 
     let body = await response.json()
+    let user_id = jwtDecode(body.signedJwt).user_id
 
-    if (response.status === 200) {
-      // store jwt in AsyncStorage - TODO
-      let user_id = jwtDecode(body.token).user_id
-
-      this.setState({ loggedInUser: user_id, error: null })
+    if (response.status.toString()[0] === '2') {
+      try {
+        await AsyncStorage.setItem('Token', body.signedJwt)
+        this.setState({ screen: NOTE_LIST, loggedInUser: user_id, error: null })
+      }
+      catch (error) {
+        this.setState({ error })
+      }
     }
     else {
       this.setState({ error: body })
@@ -69,13 +93,15 @@ export default class App extends React.Component {
     return (
       <Container>
         <Content contentContainerStyle={styles.contentContainer}>
+        {this.state.error ? <Text style={{color: "red"}}> {this.state.error.message} </Text> : null}
+
         {this.state.isLoading ?
           <Spinner color='purple' />
           : <View>
               {this.state.screen === NOTE_LIST ? <NoteList notes={this.state.notes} /> : null}
               {this.state.screen === LOGIN || this.state.screen === REGISTRATION ?
                  <LoginOrReg
-                    regHandler={this.loginOrRegHandler}
+                    loginOrRegHandler={this.loginOrRegHandler}
                     error={this.state.error}
                     screen={this.state.screen}
                   /> : null}

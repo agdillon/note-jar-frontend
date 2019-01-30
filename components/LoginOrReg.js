@@ -47,7 +47,7 @@ export default class LoginOrReg extends React.Component {
           {this.props.error ? <Text style={{color: "red"}}> {this.props.error.message} </Text> : null}
 
           <Form>
-            <Item regular>
+            <Item regular style={styles.formField}>
               <Input
                 value={this.state.email}
                 onChangeText={email => this.setState({ email })}
@@ -56,11 +56,10 @@ export default class LoginOrReg extends React.Component {
                 keyboardType="email-address"
                 maxLength={254}
                 placeholder="Email Address"
-                style={styles.formField}
               />
             </Item>
 
-            <Item regular>
+            <Item regular style={styles.formField}>
               <Input
                 value={this.state.password}
                 onChangeText={password => this.setState({ password })}
@@ -68,7 +67,6 @@ export default class LoginOrReg extends React.Component {
                 secureTextEntry
                 textContentType="password"
                 placeholder="Password"
-                style={styles.formField}
               />
             </Item>
 
@@ -142,6 +140,6 @@ const styles = StyleSheet.create({
     width: 200
   },
   button: {
-    color: 'purple'
+    backgroundColor: 'purple'
   }
 })
