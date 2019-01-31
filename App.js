@@ -5,6 +5,7 @@ import { Container, Content, Text, Spinner } from 'native-base'
 import NoteList from './components/NoteList'
 import LoginOrReg from './components/LoginOrReg'
 import Dashboard from './components/Dashboard'
+import About from './components/About'
 
 const LOGIN = 'Login'
 const REGISTRATION = 'Registration'
@@ -134,6 +135,7 @@ export default class App extends React.Component {
                 />
                 : null}
               {this.state.screen === NOTE_LIST ? <NoteList notes={this.state.notes} /> : null}
+              {this.state.screen === ABOUT ? <About /> : null}
             </View>
         }
         </Content>

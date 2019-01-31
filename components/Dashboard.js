@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { Container, Content, Text, Button } from 'native-base'
 
 function Dashboard({ screenChangeHandler, logoutHandler }) {
