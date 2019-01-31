@@ -1,6 +1,6 @@
 import jwtDecode from 'jwt-decode'
 import React from 'react'
-import { StyleSheet, View, AsyncStorage } from 'react-native'
+import { StyleSheet, View, AsyncStorage, BackHandler } from 'react-native'
 import { Container, Content, Text, Spinner } from 'native-base'
 import NoteList from './components/NoteList'
 import LoginOrReg from './components/LoginOrReg'
@@ -36,6 +36,8 @@ export default class App extends React.Component {
   }
 
   async componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackPress)
+
     // check for JWT and set screen and loggedInUser
     let token
 
@@ -64,6 +66,14 @@ export default class App extends React.Component {
     catch (error) {
       this.setState({ error })
     }
+  }
+
+  handleBackPress = () => {
+    if (![DASHBOARD, LOGIN, REGISTRATION].includes(this.state.screen)) {
+      this.setState({ screen: DASHBOARD })
+      return true
+    }
+    else return false
   }
 
   loginOrRegHandler = async (formData, isNewUser) => {
@@ -117,7 +127,7 @@ export default class App extends React.Component {
     return (
       <Container>
         <Content contentContainerStyle={styles.contentContainer}>
-        {this.state.error ? <Text style={{color: "red"}}> {this.state.error.message} </Text> : null}
+        {this.state.error ? <Text style={{color: 'red'}}> {this.state.error.message} </Text> : null}
 
         {this.state.isLoading ?
           <Spinner color='purple' />
