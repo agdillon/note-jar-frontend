@@ -1,16 +1,20 @@
 import React from 'react'
 import { StyleSheet, Text, View, FlatList } from 'react-native'
+import { Container, Content } from 'native-base'
 
 function NoteList({ notes }) {
+  console.log('notes')
   return (
-    <View style={styles.container}>
-      <Text>All Notes</Text>
-      <FlatList
-        data={notes}
-        keyExtractor={note => note.note_id.toString()}
-        renderItem={({ item }) => <Text style={styles.item}>{item.content}</Text> }
-      />
-    </View>
+    <Container>
+      <Content contentContainerStyle={styles.contentContainer}>
+        <Text>All Notes</Text>
+        <FlatList
+          data={notes}
+          keyExtractor={note => note.note_id.toString()}
+          renderItem={({ item }) => <Text style={styles.item}>{item.content}</Text>}
+        />
+      </Content>
+    </Container>
   )
 }
 

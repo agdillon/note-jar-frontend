@@ -4,11 +4,16 @@ import { StyleSheet, View, AsyncStorage } from 'react-native'
 import { Container, Content, Text, Spinner } from 'native-base'
 import NoteList from './components/NoteList'
 import LoginOrReg from './components/LoginOrReg'
+import Dashboard from './components/Dashboard'
 
 const LOGIN = 'Login'
 const REGISTRATION = 'Registration'
 const DASHBOARD = 'Dashboard'
+const RANDOM = 'Random'
 const NOTE_LIST = 'NoteList'
+const CREATE = 'Create'
+const FRIEND = 'Friend'
+const ABOUT = 'About'
 
 export default class App extends React.Component {
   constructor() {
@@ -38,7 +43,7 @@ export default class App extends React.Component {
       console.log(`token ${token}`)
       if (token !== null) {
         let user_id = jwtDecode(token).user_id
-        this.setState({ screen: NOTE_LIST, loggedInUser: user_id })
+        this.setState({ screen: DASHBOARD, loggedInUser: user_id })
       }
       else {
         this.setState({ screen: LOGIN })
@@ -73,12 +78,21 @@ export default class App extends React.Component {
     })
 
     let body = await response.json()
-    let user_id = jwtDecode(body.signedJwt).user_id
+    console.log(body.signedJwt)
+
+    let theJwt
+
+    try {
+      theJwt = jwtDecode(body.signedJwt)
+    }
+    catch (error) {
+      this.setState({ error })
+    }
 
     if (response.status.toString()[0] === '2') {
       try {
         await AsyncStorage.setItem('Token', body.signedJwt)
-        this.setState({ screen: NOTE_LIST, loggedInUser: user_id, error: null })
+        this.setState({ screen: DASHBOARD, loggedInUser: theJwt.user_id, error: null })
       }
       catch (error) {
         this.setState({ error })
@@ -87,6 +101,15 @@ export default class App extends React.Component {
     else {
       this.setState({ error: body })
     }
+  }
+
+  logoutHandler = async () => {
+    await AsyncStorage.removeItem('Token')
+    this.setState({ loggedInUser: null, notes: [], screen: LOGIN })
+  }
+
+  screenChangeHandler = (screen) => {
+    this.setState({ screen })
   }
 
   render() {
@@ -98,13 +121,19 @@ export default class App extends React.Component {
         {this.state.isLoading ?
           <Spinner color='purple' />
           : <View>
-              {this.state.screen === NOTE_LIST ? <NoteList notes={this.state.notes} /> : null}
               {this.state.screen === LOGIN || this.state.screen === REGISTRATION ?
                  <LoginOrReg
                     loginOrRegHandler={this.loginOrRegHandler}
                     error={this.state.error}
                     screen={this.state.screen}
                   /> : null}
+              {this.state.screen === DASHBOARD ?
+                <Dashboard
+                  screenChangeHandler={this.screenChangeHandler}
+                  logoutHandler={this.logoutHandler}
+                />
+                : null}
+              {this.state.screen === NOTE_LIST ? <NoteList notes={this.state.notes} /> : null}
             </View>
         }
         </Content>
