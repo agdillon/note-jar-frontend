@@ -3,13 +3,10 @@ import { StyleSheet, View } from 'react-native'
 import { Container, Content, Text } from 'native-base'
 
 function About() {
-  console.log('about')
-
   return (
     <Container>
       <Content contentContainerStyle={styles.contentContainer}>
         <Text>About Note Jar</Text>
-        {/*add a super cool jar graphic here - TODO*/}
         <Text>
           Write notes to your future self, write notes to your loved ones.
         </Text>

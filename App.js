@@ -43,7 +43,6 @@ export default class App extends React.Component {
 
     try {
       token = await AsyncStorage.getItem('Token')
-      console.log(`token ${token}`)
       if (token !== null) {
         let user_id = jwtDecode(token).user_id
         this.setState({ screen: DASHBOARD, loggedInUser: user_id })
@@ -89,7 +88,6 @@ export default class App extends React.Component {
     })
 
     let body = await response.json()
-    console.log(body.signedJwt)
 
     let theJwt
 

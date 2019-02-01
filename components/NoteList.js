@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, FlatList } from 'react-native'
 import { Container, Content } from 'native-base'
 
 function NoteList({ notes }) {
-  console.log('notes')
   return (
     <Container>
       <Content contentContainerStyle={styles.contentContainer}>

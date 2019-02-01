@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native'
 import { Container, Content, Text, Button } from 'native-base'
 
 function Dashboard({ screenChangeHandler, logoutHandler }) {
-  console.log('dashboard')
   return (
     <Container>
       <Content contentContainerStyle={styles.contentContainer}>

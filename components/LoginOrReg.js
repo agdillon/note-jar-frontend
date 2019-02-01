@@ -37,7 +37,6 @@ export default class LoginOrReg extends React.Component {
   }
 
   render() {
-    console.log('login')
     return (
       <Container>
         <Content contentContainerStyle={styles.contentContainer}>
