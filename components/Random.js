@@ -1,12 +1,12 @@
 import React from 'react'
-import { StyleSheet, Text, FlatList, TouchableNativeFeedback } from 'react-native'
-import { Container, Content } from 'native-base'
+import { StyleSheet, TouchableNativeFeedback } from 'react-native'
+import { Container, Content, Text } from 'native-base'
 
-function NoteList({ notes, screenChangeHandler }) {
+function Random({ notes, screenChangeHandler }) {
   return (
     <Container>
       <Content contentContainerStyle={styles.contentContainer}>
-        <Text>All Notes</Text>
+        <Text>Random Note</Text>
         {notes.length === 0
           ? (
             <Text>
@@ -18,17 +18,13 @@ function NoteList({ notes, screenChangeHandler }) {
               </TouchableNativeFeedback>
             </Text>
           )
-          : (
-            <FlatList
-              data={notes}
-              keyExtractor={note => note.note_id.toString()}
-              renderItem={({ item }) => <Text style={styles.item}>{item.content}</Text>}
-            />
-          )}
+          : <Text>{notes[Math.floor(Math.random() * notes.length)]}</Text>}
       </Content>
     </Container>
   )
 }
+
+export default Random
 
 const styles = StyleSheet.create({
   contentContainer: {
@@ -36,11 +32,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  item: {
-    padding: 10,
-    fontSize: 18
   }
 })
-
-export default NoteList

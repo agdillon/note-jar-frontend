@@ -1,12 +1,14 @@
 import jwtDecode from 'jwt-decode'
 import React from 'react'
-import { StyleSheet, View, AsyncStorage, BackHandler } from 'react-native'
-import { Container, Content, Text, Spinner } from 'native-base'
 import { AppLoading } from 'expo'
+import { Container, Content, Text } from 'native-base'
+import { StyleSheet, View, AsyncStorage, BackHandler } from 'react-native'
 import NoteList from './components/NoteList'
 import LoginOrReg from './components/LoginOrReg'
 import Dashboard from './components/Dashboard'
 import About from './components/About'
+import Random from './components/Random'
+import Create from './components/Create'
 
 const LOGIN = 'Login'
 const REGISTRATION = 'Registration'
@@ -131,19 +133,32 @@ export default class App extends React.Component {
         {this.state.isLoading ?
           <AppLoading />
           : <View>
-              {this.state.screen === LOGIN || this.state.screen === REGISTRATION ?
-                 <LoginOrReg
+              {this.state.screen === LOGIN || this.state.screen === REGISTRATION
+                ? <LoginOrReg
                     loginOrRegHandler={this.loginOrRegHandler}
                     error={this.state.error}
                     screen={this.state.screen}
-                  /> : null}
-              {this.state.screen === DASHBOARD ?
-                <Dashboard
+                  />
+                : null}
+              {this.state.screen === DASHBOARD
+                ? <Dashboard
                   screenChangeHandler={this.screenChangeHandler}
                   logoutHandler={this.logoutHandler}
                 />
                 : null}
-              {this.state.screen === NOTE_LIST ? <NoteList notes={this.state.notes} /> : null}
+              {this.state.screen === NOTE_LIST
+                ? <NoteList
+                notes={this.state.notes}
+                screenChangeHandler={this.screenChangeHandler}
+                />
+                : null}
+              {this.state.screen === CREATE ? <Create /> : null}
+              {this.state.screen === RANDOM
+                ? <Random
+                  notes={this.state.notes}
+                  screenChangeHandler={this.screenChangeHandler}
+                  />
+                : null}
               {this.state.screen === ABOUT ? <About /> : null}
             </View>
         }
