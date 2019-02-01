@@ -1,7 +1,7 @@
 import jwtDecode from 'jwt-decode'
 import React from 'react'
 import { AppLoading } from 'expo'
-import { Container, Content, Text } from 'native-base'
+import { Container, Content, Text, Spinner } from 'native-base'
 import { StyleSheet, View, AsyncStorage, BackHandler } from 'react-native'
 import NoteList from './components/NoteList'
 import LoginOrReg from './components/LoginOrReg'
@@ -24,7 +24,8 @@ export default class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      isLoading: true,
+      initialLoading: true,
+      isLoading: false,
       loggedInUser: null,
       token: null,
       notes: [],
@@ -46,11 +47,11 @@ export default class App extends React.Component {
       let token = await AsyncStorage.getItem('Token')
       if (token !== null) {
         let user_id = jwtDecode(token).user_id
-        this.setState({ screen: DASHBOARD, loggedInUser: user_id, token, isLoading: false })
+        this.setState({ screen: DASHBOARD, loggedInUser: user_id, token, initialLoading: false })
         this.getNotes()
       }
       else {
-        this.setState({ screen: LOGIN, isLoading: false })
+        this.setState({ screen: LOGIN, initialLoading: false })
       }
     }
     catch (error) {
@@ -67,6 +68,8 @@ export default class App extends React.Component {
   }
 
   loginOrRegHandler = async (formData, isNewUser) => {
+    this.setState({ isLoading: true })
+
     let route = isNewUser ? 'register' : 'login'
 
     let response = await fetch(`http://note-jar.herokuapp.com/auth/${route}`, {
@@ -84,15 +87,21 @@ export default class App extends React.Component {
       try {
         let jwtData = jwtDecode(body.signedJwt)
         await AsyncStorage.setItem('Token', body.signedJwt)
-        this.setState({ screen: DASHBOARD, loggedInUser: jwtData.user_id, token: body.signedJwt, error: null })
+        this.setState({
+          screen: DASHBOARD,
+          loggedInUser: jwtData.user_id,
+          token: body.signedJwt,
+          error: null,
+          isLoading: false
+        })
         this.getNotes()
       }
       catch (error) {
-        this.setState({ error })
+        this.setState({ error, isLoading: false })
       }
     }
     else {
-      this.setState({ error: body })
+      this.setState({ error: body, isLoading: false })
     }
   }
 
@@ -118,45 +127,56 @@ export default class App extends React.Component {
   }
 
   render() {
-    return (
-      <Container>
-        <Content contentContainerStyle={styles.contentContainer}>
-        {this.state.error ? <Text style={{color: 'red'}}> {this.state.error.message} </Text> : null}
+    if (this.state.initialLoading) {
+      return <AppLoading />
+    }
+    else if (this.state.isLoading) {
+      return (
+        <Container>
+          <Content contentContainerStyle={styles.contentContainer}>
+            <Spinner color='purple' />
+          </Content>
+        </Container>
+      )
+    }
+    else {
+      return (
+        <Container>
+          <Content contentContainerStyle={styles.contentContainer}>
+          {this.state.error ? <Text style={{ color: 'red' }}> {this.state.error.message} </Text> : null}
 
-        {this.state.isLoading ?
-          <AppLoading />
-          : <View>
-              {this.state.screen === LOGIN || this.state.screen === REGISTRATION
-                ? <LoginOrReg
-                    loginOrRegHandler={this.loginOrRegHandler}
-                    error={this.state.error}
-                    screen={this.state.screen}
-                  />
-                : null}
-              {this.state.screen === DASHBOARD
-                ? <Dashboard
-                  screenChangeHandler={this.screenChangeHandler}
-                  logoutHandler={this.logoutHandler}
+          <View>
+            {this.state.screen === LOGIN || this.state.screen === REGISTRATION
+              ? <LoginOrReg
+                  loginOrRegHandler={this.loginOrRegHandler}
+                  error={this.state.error}
+                  screen={this.state.screen}
                 />
-                : null}
-              {this.state.screen === NOTE_LIST
-                ? <NoteList
+              : null}
+            {this.state.screen === DASHBOARD
+              ? <Dashboard
+                screenChangeHandler={this.screenChangeHandler}
+                logoutHandler={this.logoutHandler}
+              />
+              : null}
+            {this.state.screen === NOTE_LIST
+              ? <NoteList
+              notes={this.state.notes}
+              screenChangeHandler={this.screenChangeHandler}
+              />
+              : null}
+            {this.state.screen === CREATE ? <Create /> : null}
+            {this.state.screen === RANDOM
+              ? <Random
                 notes={this.state.notes}
                 screenChangeHandler={this.screenChangeHandler}
                 />
-                : null}
-              {this.state.screen === CREATE ? <Create /> : null}
-              {this.state.screen === RANDOM
-                ? <Random
-                  notes={this.state.notes}
-                  screenChangeHandler={this.screenChangeHandler}
-                  />
-                : null}
-              {this.state.screen === ABOUT ? <About /> : null}
-            </View>
-        }
-        </Content>
-      </Container>
-    )
+              : null}
+            {this.state.screen === ABOUT ? <About /> : null}
+          </View>
+          </Content>
+        </Container>
+      )
+    }
   }
 }
