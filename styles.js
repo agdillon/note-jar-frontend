@@ -3,11 +3,14 @@ import { StyleSheet } from 'react-native'
 export default StyleSheet.create({
   contentContainer: {
     flex: 1,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#fff'
   },
   button: {
-    backgroundColor: 'purple'
+    backgroundColor: 'powderblue'
+  },
+  buttonText: {
+    color: 'black'
   }
 })

@@ -60,7 +60,7 @@ export default class LoginOrReg extends React.Component {
               />
             </Item>
 
-            <Item regular style={localStyles.formField}>
+            <Item regular style={[localStyles.formField, { marginTop: 0 }]}>
               <Input
                 value={this.state.password}
                 onChangeText={password => this.setState({ password })}
@@ -102,15 +102,15 @@ export default class LoginOrReg extends React.Component {
             daily_time
             time input
             */}
-            <Button onPress={this.onSubmitForm} title='Submit' style={styles.button}>
-              <Text uppercase={false}>Submit</Text>
+            <Button onPress={this.onSubmitForm} title='Submit' style={[styles.button, localStyles.button]}>
+              <Text uppercase={false} style={styles.buttonText}>Submit</Text>
             </Button>
           </Form>
 
           {/*toggle between login and registration screens*/}
           <TouchableNativeFeedback onPress={this.toggleScreen}>
             <View>
-              <Text style={{ color: 'blue' }}>
+              <Text style={{ color: 'blue', margin: 5 }}>
                 {this.state.screen === REGISTRATION ? 'Sign in to your account' : 'Create a new account'}
               </Text>
             </View>
@@ -132,6 +132,11 @@ const localStyles = StyleSheet.create({
   },
   formField: {
     height: 40,
-    width: 200
+    width: 240,
+    margin: 5
+  },
+  button: {
+    width: 80,
+    marginLeft: 80
   }
 })
