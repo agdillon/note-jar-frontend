@@ -9,6 +9,7 @@ import Dashboard from './components/Dashboard'
 import About from './components/About'
 import Random from './components/Random'
 import Create from './components/Create'
+import styles from './styles'
 
 const LOGIN = 'Login'
 const REGISTRATION = 'Registration'
@@ -159,12 +160,3 @@ export default class App extends React.Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  contentContainer: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-})

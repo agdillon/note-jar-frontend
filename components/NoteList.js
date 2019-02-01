@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, FlatList, TouchableNativeFeedback } from 'react-native'
 import { Container, Content } from 'native-base'
+import styles from '../styles'
 
 function NoteList({ notes, screenChangeHandler }) {
   return (
@@ -22,7 +23,7 @@ function NoteList({ notes, screenChangeHandler }) {
             <FlatList
               data={notes}
               keyExtractor={note => note.note_id.toString()}
-              renderItem={({ item }) => <Text style={styles.item}>{item.content}</Text>}
+              renderItem={({ item }) => <Text style={localStyles.item}>{item.content}</Text>}
             />
           )}
       </Content>
@@ -30,13 +31,7 @@ function NoteList({ notes, screenChangeHandler }) {
   )
 }
 
-const styles = StyleSheet.create({
-  contentContainer: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+const localStyles = StyleSheet.create({
   item: {
     padding: 10,
     fontSize: 18

@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, TouchableNativeFeedback } from 'react-native'
 import { Container, Content, Text } from 'native-base'
+import styles from '../styles'
 
 function Random({ notes, screenChangeHandler }) {
   return (
@@ -25,12 +26,3 @@ function Random({ notes, screenChangeHandler }) {
 }
 
 export default Random
-
-const styles = StyleSheet.create({
-  contentContainer: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
-})

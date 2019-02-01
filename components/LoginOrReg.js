@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, Switch, TouchableNativeFeedback } from 'react-native'
 import { Container, Content, Text, Form, Input, Label, Button, Item } from 'native-base'
+import styles from '../styles'
 
 const LOGIN = 'Login'
 const REGISTRATION = 'Registration'
@@ -47,7 +48,7 @@ export default class LoginOrReg extends React.Component {
           {this.props.error ? <Text style={{color: "red"}}> {this.props.error.message} </Text> : null}
 
           <Form>
-            <Item regular style={styles.formField}>
+            <Item regular style={localStyles.formField}>
               <Input
                 value={this.state.email}
                 onChangeText={email => this.setState({ email })}
@@ -59,7 +60,7 @@ export default class LoginOrReg extends React.Component {
               />
             </Item>
 
-            <Item regular style={styles.formField}>
+            <Item regular style={localStyles.formField}>
               <Input
                 value={this.state.password}
                 onChangeText={password => this.setState({ password })}
@@ -73,7 +74,7 @@ export default class LoginOrReg extends React.Component {
             {/*minimum feature for daily is going to be push notification at 9 am (device time)
             when on, send to server daily_method = "push"*/}
             {this.state.screen === REGISTRATION ?
-              <View style={styles.dailyNoteContainer}>
+              <View style={localStyles.dailyNoteContainer}>
                 <Label style={{ flex:1 }}>Daily Note</Label>
                 <Switch
                   value={this.state.dailyNoteOn}
@@ -121,13 +122,7 @@ export default class LoginOrReg extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  contentContainer: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+const localStyles = StyleSheet.create({
   dailyNoteContainer: {
     height: 50,
     width: 200,
@@ -138,8 +133,5 @@ const styles = StyleSheet.create({
   formField: {
     height: 40,
     width: 200
-  },
-  button: {
-    backgroundColor: 'purple'
   }
 })

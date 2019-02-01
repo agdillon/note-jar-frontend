@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Container, Content, Text } from 'native-base'
+import styles from '../styles'
 
 function About() {
   return (
@@ -28,12 +29,3 @@ function About() {
 }
 
 export default About
-
-const styles = StyleSheet.create({
-  contentContainer: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
-})
