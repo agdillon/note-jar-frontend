@@ -2,6 +2,7 @@ import jwtDecode from 'jwt-decode'
 import React from 'react'
 import { StyleSheet, View, AsyncStorage, BackHandler } from 'react-native'
 import { Container, Content, Text, Spinner } from 'native-base'
+import { AppLoading } from 'expo'
 import NoteList from './components/NoteList'
 import LoginOrReg from './components/LoginOrReg'
 import Dashboard from './components/Dashboard'
@@ -128,7 +129,7 @@ export default class App extends React.Component {
         {this.state.error ? <Text style={{color: 'red'}}> {this.state.error.message} </Text> : null}
 
         {this.state.isLoading ?
-          <Spinner color='purple' />
+          <AppLoading />
           : <View>
               {this.state.screen === LOGIN || this.state.screen === REGISTRATION ?
                  <LoginOrReg
