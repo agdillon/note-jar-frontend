@@ -25,45 +25,32 @@ export default class App extends React.Component {
     this.state = {
       isLoading: true,
       loggedInUser: null,
+      token: null,
       notes: [],
       error: null,
       screen: null
     }
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     await Expo.Font.loadAsync({
       'Roboto': require('native-base/Fonts/Roboto.ttf'),
-      'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
+      'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf')
     })
-  }
 
-  async componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackPress)
 
     // check for JWT and set screen and loggedInUser
-    let token
-
     try {
-      token = await AsyncStorage.getItem('Token')
+      let token = await AsyncStorage.getItem('Token')
       if (token !== null) {
         let user_id = jwtDecode(token).user_id
-        this.setState({ screen: DASHBOARD, loggedInUser: user_id })
+        this.setState({ screen: DASHBOARD, loggedInUser: user_id, token, isLoading: false })
+        this.getNotes()
       }
       else {
-        this.setState({ screen: LOGIN })
+        this.setState({ screen: LOGIN, isLoading: false })
       }
-    }
-    catch (error) {
-      this.setState({ error })
-    }
-
-    // get notes
-    try {
-      const response = await fetch(`http://note-jar.herokuapp.com/users/${this.state.loggedInUser}/notes`,
-        { headers: { Authorization: `Bearer ${token}` } })
-      const notes = await response.json()
-      this.setState({ notes, isLoading: false, error: null })
     }
     catch (error) {
       this.setState({ error })
@@ -92,19 +79,12 @@ export default class App extends React.Component {
 
     let body = await response.json()
 
-    let theJwt
-
-    try {
-      theJwt = jwtDecode(body.signedJwt)
-    }
-    catch (error) {
-      this.setState({ error })
-    }
-
     if (response.status.toString()[0] === '2') {
       try {
+        let jwtData = jwtDecode(body.signedJwt)
         await AsyncStorage.setItem('Token', body.signedJwt)
-        this.setState({ screen: DASHBOARD, loggedInUser: theJwt.user_id, error: null })
+        this.setState({ screen: DASHBOARD, loggedInUser: jwtData.user_id, token: body.signedJwt, error: null })
+        this.getNotes()
       }
       catch (error) {
         this.setState({ error })
@@ -122,6 +102,18 @@ export default class App extends React.Component {
 
   screenChangeHandler = (screen) => {
     this.setState({ screen })
+  }
+
+  getNotes = async () => {
+    try {
+      const response = await fetch(`http://note-jar.herokuapp.com/users/${this.state.loggedInUser}/notes`,
+        { headers: { Authorization: `Bearer ${this.state.token}` } })
+      const notes = await response.json()
+      this.setState({ notes, error: null })
+    }
+    catch (error) {
+      this.setState({ error })
+    }
   }
 
   render() {
