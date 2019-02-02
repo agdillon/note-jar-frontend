@@ -19,8 +19,8 @@ function Dashboard({ screenChangeHandler, logoutHandler }) {
           <Text uppercase={false} style={styles.buttonText}>Create a note</Text>
         </Button>
 
-        <Button onPress={() => screenChangeHandler('Friend')} title='Invite a friend' style={[styles.button, localStyles.button]}>
-          <Text uppercase={false} style={styles.buttonText}>Invite a friend</Text>
+        <Button onPress={() => screenChangeHandler('Profile')} title='Edit your profile' style={[styles.button, localStyles.button]}>
+          <Text uppercase={false} style={styles.buttonText}>Edit your profile</Text>
         </Button>
 
         <Button onPress={() => screenChangeHandler('About')} title='About this app' style={[styles.button, localStyles.button]}>

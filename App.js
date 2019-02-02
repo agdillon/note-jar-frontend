@@ -17,7 +17,9 @@ const DASHBOARD = 'Dashboard'
 const RANDOM = 'Random'
 const NOTE_LIST = 'NoteList'
 const CREATE = 'Create'
+const INVITE = 'Invite'
 const FRIEND = 'Friend'
+const PROFILE = 'Profile'
 const ABOUT = 'About'
 
 export default class App extends React.Component {
@@ -26,7 +28,8 @@ export default class App extends React.Component {
     this.state = {
       initialLoading: true,
       isLoading: false,
-      loggedInUser: null,
+      userId: null,
+      user: null,
       token: null,
       notes: [],
       error: null,
@@ -42,12 +45,13 @@ export default class App extends React.Component {
 
     BackHandler.addEventListener('hardwareBackPress', this.handleBackPress)
 
-    // check for JWT and set screen and loggedInUser
+    // check for JWT and set screen, userId, user, notes
     try {
       let token = await AsyncStorage.getItem('Token')
       if (token !== null) {
         let user_id = jwtDecode(token).user_id
-        this.setState({ screen: DASHBOARD, loggedInUser: user_id, token, initialLoading: false })
+        this.setState({ screen: DASHBOARD, userId: user_id, token, initialLoading: false })
+        this.getUser()
         this.getNotes()
       }
       else {
@@ -75,7 +79,7 @@ export default class App extends React.Component {
     let response = await fetch(`http://note-jar.herokuapp.com/auth/${route}`, {
       method: 'POST',
       headers: {
-        Accept: 'application/json',
+        'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(formData)
@@ -85,15 +89,16 @@ export default class App extends React.Component {
 
     if (response.status.toString()[0] === '2') {
       try {
-        let jwtData = jwtDecode(body.signedJwt)
-        await AsyncStorage.setItem('Token', body.signedJwt)
+        let jwtData = jwtDecode(body.jwt)
+        await AsyncStorage.setItem('Token', body.jwt)
         this.setState({
           screen: DASHBOARD,
-          loggedInUser: jwtData.user_id,
-          token: body.signedJwt,
+          userId: jwtData.user_id,
+          token: body.jwt,
           error: null,
           isLoading: false
         })
+        this.getUser()
         this.getNotes()
       }
       catch (error) {
@@ -107,7 +112,7 @@ export default class App extends React.Component {
 
   logoutHandler = async () => {
     await AsyncStorage.removeItem('Token')
-    this.setState({ loggedInUser: null, notes: [], screen: LOGIN })
+    this.setState({ userId: null, notes: [], screen: LOGIN })
   }
 
   screenChangeHandler = (screen) => {
@@ -116,10 +121,34 @@ export default class App extends React.Component {
 
   getNotes = async () => {
     try {
-      const response = await fetch(`http://note-jar.herokuapp.com/users/${this.state.loggedInUser}/notes`,
-        { headers: { Authorization: `Bearer ${this.state.token}` } })
+      const response = await fetch(`http://note-jar.herokuapp.com/users/${this.state.userId}/notes`,
+        {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            'Authorization': `Bearer ${this.state.token}`
+          }
+        })
       const notes = await response.json()
       this.setState({ notes, error: null })
+    }
+    catch (error) {
+      this.setState({ error })
+    }
+  }
+
+  getUser = async () => {
+    try {
+      const response = await fetch(`http://note-jar.herokuapp.com/users/${this.state.userId}`,
+        {
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+            'Authorization': `Bearer ${this.state.token}`
+          }
+        })
+      const notes = await response.json()
+      this.setState({ user, error: null })
     }
     catch (error) {
       this.setState({ error })
@@ -134,7 +163,7 @@ export default class App extends React.Component {
       return (
         <Container>
           <Content contentContainerStyle={styles.contentContainer}>
-            <Spinner color='purple' />
+            <Spinner color='cadetblue' />
           </Content>
         </Container>
       )
