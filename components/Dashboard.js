@@ -1,9 +1,10 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
 import { Container, Content, Text, Button } from 'native-base'
+import Invite from './Invite'
 import styles from '../styles'
 
-function Dashboard({ screenChangeHandler, logoutHandler }) {
+function Dashboard({ screenChangeHandler, logoutHandler, code }) {
   return (
     <Container>
       <Content contentContainerStyle={styles.contentContainer}>
@@ -18,6 +19,8 @@ function Dashboard({ screenChangeHandler, logoutHandler }) {
         <Button onPress={() => screenChangeHandler('Create')} title='Create a note' style={[styles.button, localStyles.button]}>
           <Text uppercase={false} style={styles.buttonText}>Create a note</Text>
         </Button>
+
+        <Invite code={code} />
 
         <Button onPress={() => screenChangeHandler('Profile')} title='Edit your profile' style={[styles.button, localStyles.button]}>
           <Text uppercase={false} style={styles.buttonText}>Edit your profile</Text>
@@ -39,6 +42,7 @@ export default Dashboard
 
 const localStyles = StyleSheet.create({
   button: {
+    height: 50,
     width: 250,
     margin: 10
   }

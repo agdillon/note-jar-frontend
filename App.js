@@ -50,9 +50,10 @@ export default class App extends React.Component {
       let token = await AsyncStorage.getItem('Token')
       if (token !== null) {
         let user_id = jwtDecode(token).user_id
-        this.setState({ screen: DASHBOARD, userId: user_id, token, initialLoading: false })
-        this.getUser()
-        this.getNotes()
+        this.setState({ userId: user_id, token })
+        await this.getUser()
+        await this.getNotes()
+        this.setState({ screen: DASHBOARD, initialLoading: false })
       }
       else {
         this.setState({ screen: LOGIN, initialLoading: false })
@@ -91,15 +92,10 @@ export default class App extends React.Component {
       try {
         let jwtData = jwtDecode(body.jwt)
         await AsyncStorage.setItem('Token', body.jwt)
-        this.setState({
-          screen: DASHBOARD,
-          userId: jwtData.user_id,
-          token: body.jwt,
-          error: null,
-          isLoading: false
-        })
-        this.getUser()
-        this.getNotes()
+        this.setState({ userId: jwtData.user_id, token: body.jwt })
+        await this.getUser()
+        await this.getNotes()
+        this.setState({ screen: DASHBOARD, isLoading: false })
       }
       catch (error) {
         this.setState({ error, isLoading: false })
@@ -125,7 +121,7 @@ export default class App extends React.Component {
         {
           headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
             'Authorization': `Bearer ${this.state.token}`
           }
         })
@@ -143,11 +139,11 @@ export default class App extends React.Component {
         {
           headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
             'Authorization': `Bearer ${this.state.token}`
           }
         })
-      const notes = await response.json()
+      const user = await response.json()
       this.setState({ user, error: null })
     }
     catch (error) {
@@ -173,7 +169,6 @@ export default class App extends React.Component {
         <Container>
           <Content contentContainerStyle={styles.contentContainer}>
           {this.state.error ? <Text style={{ color: 'red' }}> {this.state.error.message} </Text> : null}
-
           <View>
             {this.state.screen === LOGIN || this.state.screen === REGISTRATION
               ? <LoginOrReg
@@ -186,6 +181,7 @@ export default class App extends React.Component {
               ? <Dashboard
                 screenChangeHandler={this.screenChangeHandler}
                 logoutHandler={this.logoutHandler}
+                code={this.state.user ? this.state.user.code : null}
               />
               : null}
             {this.state.screen === NOTE_LIST
