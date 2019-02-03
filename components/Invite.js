@@ -14,8 +14,9 @@ function Invite({ code }) {
         onPress={() => { Clipboard.setString(code) }}
         title='Copy to clipboard'
         style={[styles.button, { height: 50, width: 45 }]}
+        iconLeft
       >
-        <Icon type='FontAwesome' name='copy' style={[styles.buttonText, { fontSize: 24 }]} />
+        <Icon type='FontAwesome' name='copy' style={[styles.buttonText, { fontSize: 24, marginLeft: 10 }]} />
       </Button>
     </View>
   )
