@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, View, Switch, TouchableNativeFeedback } from 'react-native'
-import { Container, Content, Text, Form, Input, Label, Button, Item } from 'native-base'
+import { Container, Content, Text, Form, Item, Input, Label, Button } from 'native-base'
 import styles from '../styles'
 
 const LOGIN = 'Login'
@@ -57,6 +57,7 @@ export default class LoginOrReg extends React.Component {
                 keyboardType="email-address"
                 maxLength={254}
                 placeholder="Email Address"
+                returnKeyType="send"
               />
             </Item>
 
@@ -68,6 +69,7 @@ export default class LoginOrReg extends React.Component {
                 secureTextEntry
                 textContentType="password"
                 placeholder="Password"
+                returnKeyType="send"
               />
             </Item>
 
@@ -109,13 +111,16 @@ export default class LoginOrReg extends React.Component {
 
           {/*toggle between login and registration screens*/}
           <TouchableNativeFeedback onPress={this.toggleScreen}>
-            <View>
-              <Text style={{ color: 'blue', margin: 5 }}>
-                {this.state.screen === REGISTRATION ? 'Sign in to your account' : 'Create a new account'}
-              </Text>
-            </View>
+            <Text style={{ color: 'blue', margin: 5 }}>
+              {this.state.screen === REGISTRATION ? 'Sign in to your account' : 'Create a new account'}
+            </Text>
           </TouchableNativeFeedback>
 
+          <TouchableNativeFeedback onPress={() => this.props.screenChangeHandler('Friend')}>
+            <Text style={{ color: 'blue', margin: 5 }}>
+            Writing a note for a friend?
+            </Text>
+          </TouchableNativeFeedback>
         </Content>
       </Container>
     )

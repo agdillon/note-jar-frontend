@@ -9,6 +9,7 @@ import Dashboard from './components/Dashboard'
 import About from './components/About'
 import Random from './components/Random'
 import Create from './components/Create'
+import Friend from './components/Friend'
 import styles from './styles'
 
 const LOGIN = 'Login'
@@ -30,6 +31,8 @@ export default class App extends React.Component {
       isLoading: false,
       userId: null,
       user: null,
+      code: null,
+      author: null,
       token: null,
       notes: [],
       error: null,
@@ -65,7 +68,17 @@ export default class App extends React.Component {
   }
 
   handleBackPress = () => {
-    if (![DASHBOARD, LOGIN, REGISTRATION].includes(this.state.screen)) {
+    // if user is a friend (has entered friend code) and they're on Create screen,
+    // back button should take them back to Friend login screen
+    if (this.state.screen === CREATE && this.state.code) {
+      this.setState({ screen: FRIEND, code: null, author: null })
+      return true
+    }
+    else if (this.state.screen === FRIEND) {
+      this.setState({ screen: LOGIN })
+      return true
+    }
+    else if (![DASHBOARD, LOGIN, REGISTRATION].includes(this.state.screen)) {
       this.setState({ screen: DASHBOARD })
       return true
     }
@@ -104,6 +117,10 @@ export default class App extends React.Component {
     else {
       this.setState({ error: body, isLoading: false })
     }
+  }
+
+  friendSubmitHandler = (formData) => {
+    this.setState(formData)
   }
 
   logoutHandler = async () => {
@@ -172,16 +189,17 @@ export default class App extends React.Component {
           <View>
             {this.state.screen === LOGIN || this.state.screen === REGISTRATION
               ? <LoginOrReg
-                  loginOrRegHandler={this.loginOrRegHandler}
                   error={this.state.error}
                   screen={this.state.screen}
+                  loginOrRegHandler={this.loginOrRegHandler}
+                  screenChangeHandler={this.screenChangeHandler}
                 />
               : null}
             {this.state.screen === DASHBOARD
               ? <Dashboard
+                code={this.state.user ? this.state.user.code : null}
                 screenChangeHandler={this.screenChangeHandler}
                 logoutHandler={this.logoutHandler}
-                code={this.state.user ? this.state.user.code : null}
               />
               : null}
             {this.state.screen === NOTE_LIST
@@ -194,6 +212,12 @@ export default class App extends React.Component {
             {this.state.screen === RANDOM
               ? <Random
                 notes={this.state.notes}
+                screenChangeHandler={this.screenChangeHandler}
+                />
+              : null}
+            {this.state.screen === FRIEND
+              ? <Friend
+                friendSubmitHandler={this.friendSubmitHandler}
                 screenChangeHandler={this.screenChangeHandler}
                 />
               : null}
