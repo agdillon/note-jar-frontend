@@ -67,7 +67,9 @@ export default class App extends React.Component {
         logoutHandler()
         this.setState({ initialLoading: false })
       }
-      this.setState({ error })
+      else {
+        this.setState({ error })        
+      }
     }
   }
 
