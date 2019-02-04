@@ -19,7 +19,7 @@ function Random({ notes, screenChangeHandler }) {
               </TouchableNativeFeedback>
             </Text>
           )
-          : <Text>{notes[Math.floor(Math.random() * notes.length)]}</Text>}
+          : <Text>{notes[Math.floor(Math.random() * notes.length)].content}</Text>}
       </Content>
     </Container>
   )

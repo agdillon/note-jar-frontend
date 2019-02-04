@@ -22,7 +22,7 @@ function NoteList({ notes, screenChangeHandler }) {
           : (
             <FlatList
               data={notes}
-              keyExtractor={note => note.note_id.toString()}
+              keyExtractor={note => note.id.toString()}
               renderItem={({ item }) => <Text style={localStyles.item}>{item.content}</Text>}
             />
           )}
