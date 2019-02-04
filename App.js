@@ -127,6 +127,52 @@ export default class App extends React.Component {
     this.setState(formData)
   }
 
+  createNoteHandler = async (formData) => {
+    this.setState({ isLoading: true })
+
+    const { content, type, tags } = formData
+    let reqBody
+
+    if (this.state.userId) {
+      reqBody = { user_id: this.state.userId, content, type, tags }
+    }
+    else {
+      reqBody = { code: this.state.code, author: this.state.author, content, type, tags }
+    }
+
+    let response = await fetch(`http://note-jar.herokuapp.com/notes`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.state.token}`
+      },
+      body: JSON.stringify(reqBody)
+    })
+
+    let body = await response.json()
+
+    if (response.status.toString()[0] === '2') {
+      try {
+        // if logged in user, send them to note list
+        if (this.state.userId) {
+          await this.getNotes()
+          this.setState({ screen: NOTE_LIST, isLoading: false })
+        }
+        // if friend, send them to blank create form again, with message saying successfully sent?
+        else {
+          this.setState({ screen: CREATE, isLoading: false })
+        }
+      }
+      catch (error) {
+        this.setState({ error, isLoading: false })
+      }
+    }
+    else {
+      this.setState({ error: body, isLoading: false })
+    }
+  }
+
   logoutHandler = async () => {
     await AsyncStorage.removeItem('Token')
     this.setState({ userId: null, user: null, token: null, notes: [], screen: LOGIN })
@@ -212,7 +258,11 @@ export default class App extends React.Component {
               screenChangeHandler={this.screenChangeHandler}
               />
               : null}
-            {this.state.screen === CREATE ? <Create /> : null}
+            {this.state.screen === CREATE
+              ? <Create
+              createNoteHandler={this.createNoteHandler}
+              />
+              : null}
             {this.state.screen === RANDOM
               ? <Random
                 notes={this.state.notes}
