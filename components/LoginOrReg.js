@@ -13,7 +13,8 @@ export default class LoginOrReg extends React.Component {
       email: '',
       password: '',
       dailyNoteOn: false,
-      screen: this.props.screen
+      screen: this.props.screen,
+      error: this.props.error
     }
   }
 
@@ -33,8 +34,8 @@ export default class LoginOrReg extends React.Component {
   }
 
   toggleScreen = () => {
-    if (this.state.screen === REGISTRATION) this.setState({ screen: LOGIN })
-    if (this.state.screen === LOGIN) this.setState({ screen: REGISTRATION })
+    if (this.state.screen === REGISTRATION) this.setState({ screen: LOGIN, error: null })
+    if (this.state.screen === LOGIN) this.setState({ screen: REGISTRATION, error: null })
   }
 
   render() {
@@ -45,7 +46,7 @@ export default class LoginOrReg extends React.Component {
             {this.state.screen === REGISTRATION ? 'Create an account' : 'Sign in to your account'}
           </Text>
 
-          {this.props.error ? <Text style={{color: "red"}}> {this.props.error.message} </Text> : null}
+          {this.state.error ? <Text style={{color: "red"}}> {this.state.error.message} </Text> : null}
 
           <Form>
             <Item regular style={localStyles.formField}>
@@ -58,6 +59,7 @@ export default class LoginOrReg extends React.Component {
                 maxLength={254}
                 placeholder="Email Address"
                 returnKeyType="send"
+                autoCapitalize="none"
               />
             </Item>
 
@@ -70,6 +72,7 @@ export default class LoginOrReg extends React.Component {
                 textContentType="password"
                 placeholder="Password"
                 returnKeyType="send"
+                autoCapitalize="none"
               />
             </Item>
 
