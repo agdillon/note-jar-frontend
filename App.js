@@ -63,6 +63,10 @@ export default class App extends React.Component {
       }
     }
     catch (error) {
+      if (error.name === 'TokenExpiredError') {
+        logoutHandler()
+        this.setState({ initialLoading: false })
+      }
       this.setState({ error })
     }
   }
@@ -125,7 +129,7 @@ export default class App extends React.Component {
 
   logoutHandler = async () => {
     await AsyncStorage.removeItem('Token')
-    this.setState({ userId: null, notes: [], screen: LOGIN })
+    this.setState({ userId: null, user: null, token: null, notes: [], screen: LOGIN })
   }
 
   screenChangeHandler = (screen) => {
