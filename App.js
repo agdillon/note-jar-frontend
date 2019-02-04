@@ -51,7 +51,7 @@ export default class App extends React.Component {
     // check for JWT and set screen, userId, user, notes
     try {
       let token = await AsyncStorage.getItem('Token')
-      if (token !== null) {
+      if (token) {
         let user_id = jwtDecode(token).user_id
         this.setState({ userId: user_id, token })
         await this.getUser()
@@ -68,7 +68,7 @@ export default class App extends React.Component {
         this.setState({ initialLoading: false })
       }
       else {
-        this.setState({ error })        
+        this.setState({ error })
       }
     }
   }
@@ -109,10 +109,8 @@ export default class App extends React.Component {
 
     if (response.status.toString()[0] === '2') {
       try {
-        let jwtData = jwtDecode(body.jwt)
         await AsyncStorage.setItem('Token', body.jwt)
-        this.setState({ userId: jwtData.user_id, token: body.jwt })
-        await this.getUser()
+        this.setState({ token: body.jwt, userId: body.user.id, user: body.user })
         await this.getNotes()
         this.setState({ screen: DASHBOARD, isLoading: false })
       }
