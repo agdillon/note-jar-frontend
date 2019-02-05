@@ -42,8 +42,8 @@ export default Dashboard
 
 const localStyles = StyleSheet.create({
   button: {
-    height: 50,
-    width: 250,
-    margin: 10
+    height: '8%',
+    width: '100%',
+    margin: '1%'
   }
 })

@@ -6,7 +6,7 @@ import styles from '../styles'
 function NoteList({ notes, screenChangeHandler }) {
   return (
     <Container>
-      <Content contentContainerStyle={[styles.contentContainer, { marginTop: 20, width: '90%' }]}>
+      <Content contentContainerStyle={[styles.contentContainer, { marginTop: '10%', width: '90%' }]}>
         {notes.length === 0
           ? (
             <Text>
