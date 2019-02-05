@@ -28,9 +28,9 @@ export default class Friend extends React.Component {
   // then they'll be taken to create component
   render() {
     return (
-      <Container>
+      <Container style={{ backgroundColor: 'transparent' }}>
         <Content contentContainerStyle={styles.contentContainer}>
-        <Text>Write a Note for a Friend</Text>
+        <Text styles={styles.titleText}>Write a Note for a Friend</Text>
 
         {this.props.error ? <Text style={{ color: "red" }}> {this.props.error.message} </Text> : null}
 
@@ -73,7 +73,8 @@ const localStyles = StyleSheet.create({
   formField: {
     height: 40,
     width: 240,
-    margin: 5
+    margin: 5,
+    backgroundColor: 'white'
   },
   button: {
     width: 80,

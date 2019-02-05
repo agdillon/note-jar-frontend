@@ -5,9 +5,9 @@ import styles from '../styles'
 
 function About() {
   return (
-    <Container>
+    <Container style={{ backgroundColor: 'transparent' }}>
       <Content contentContainerStyle={styles.contentContainer}>
-        <Text>About Note Jar</Text>
+        <Text styles={styles.titleText}>About Note Jar</Text>
         <Text style={localStyles.paragraph}>
           Write notes to your future self, write notes to your loved ones.
         </Text>

@@ -40,9 +40,9 @@ export default class LoginOrReg extends React.Component {
 
   render() {
     return (
-      <Container>
+      <Container style={{ backgroundColor: 'transparent' }}>
         <Content contentContainerStyle={styles.contentContainer}>
-          <Text>
+          <Text style={styles.titleText}>
             {this.state.screen === REGISTRATION ? 'Create an Account' : 'Sign in to Your Account'}
           </Text>
 
@@ -114,7 +114,7 @@ export default class LoginOrReg extends React.Component {
 
           {/*toggle between login and registration screens*/}
           <TouchableNativeFeedback onPress={this.toggleScreen}>
-            <Text style={{ color: 'blue', margin: 5 }}>
+            <Text style={{ color: 'blue', margin: 10 }}>
               {this.state.screen === REGISTRATION ? 'Sign in to your account' : 'Create a new account'}
             </Text>
           </TouchableNativeFeedback>
@@ -141,11 +141,13 @@ const localStyles = StyleSheet.create({
   formField: {
     height: 40,
     width: 240,
-    margin: 5
+    margin: 5,
+    backgroundColor: 'white'
   },
   button: {
     width: 80,
     marginLeft: 80,
-    marginTop: 5
+    marginTop: 5,
+    marginBottom: 15
   }
 })

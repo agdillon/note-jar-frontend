@@ -4,8 +4,7 @@ export default StyleSheet.create({
   contentContainer: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff'
+    justifyContent: 'center'
   },
   button: {
     backgroundColor: 'powderblue'
@@ -24,5 +23,10 @@ export default StyleSheet.create({
   tagUnselected: {
     backgroundColor: 'white',
     margin: 2
+  },
+  titleText: {
+    fontSize: 18,
+    letterSpacing: 1,
+    marginBottom: 5
   }
 })

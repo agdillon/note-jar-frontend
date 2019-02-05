@@ -12,7 +12,7 @@ function Invite({ code }) {
 
       <View style={localStyles.codeContainer}>
         <Item regular style={{ height: 50, width: 205 }}>
-          <Input editable={false} value={code} />
+          <Input editable={false} value={code} style={{ backgroundColor: 'white' }}/>
         </Item>
 
         <Button

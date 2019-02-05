@@ -6,32 +6,32 @@ import styles from '../styles'
 
 function Dashboard({ screenChangeHandler, logoutHandler, code }) {
   return (
-    <Container>
+    <Container style={{ backgroundColor: 'transparent' }}>
       <Content contentContainerStyle={styles.contentContainer}>
         <Button onPress={() => screenChangeHandler('Random')} title='Get a random note' style={[styles.button, localStyles.button]}>
-          <Text uppercase={false} style={styles.buttonText}>Get a random note</Text>
+          <Text uppercase={false} style={[styles.buttonText, localStyles.buttonText]}>Get a random note</Text>
         </Button>
 
         <Button onPress={() => screenChangeHandler('NoteList')} title='View all notes' style={[styles.button, localStyles.button]}>
-          <Text uppercase={false} style={styles.buttonText}>View all notes</Text>
+          <Text uppercase={false} style={[styles.buttonText, localStyles.buttonText]}>View all notes</Text>
         </Button>
 
         <Button onPress={() => screenChangeHandler('Create')} title='Create a note' style={[styles.button, localStyles.button]}>
-          <Text uppercase={false} style={styles.buttonText}>Create a note</Text>
+          <Text uppercase={false} style={[styles.buttonText, localStyles.buttonText]}>Create a note</Text>
         </Button>
 
         <Invite code={code} />
 
         <Button onPress={() => screenChangeHandler('Profile')} title='Edit your profile' style={[styles.button, localStyles.button]}>
-          <Text uppercase={false} style={styles.buttonText}>Edit your profile</Text>
+          <Text uppercase={false} style={[styles.buttonText, localStyles.buttonText]}>Edit your profile</Text>
         </Button>
 
         <Button onPress={() => screenChangeHandler('About')} title='About this app' style={[styles.button, localStyles.button]}>
-          <Text uppercase={false} style={styles.buttonText}>About this app</Text>
+          <Text uppercase={false} style={[styles.buttonText, localStyles.buttonText]}>About this app</Text>
         </Button>
 
         <Button onPress={logoutHandler} title='Sign out' style={[styles.button, localStyles.button]}>
-          <Text uppercase={false} style={styles.buttonText}>Sign out</Text>
+          <Text uppercase={false} style={[styles.buttonText, localStyles.buttonText]}>Sign out</Text>
         </Button>
       </Content>
     </Container>
@@ -45,5 +45,9 @@ const localStyles = StyleSheet.create({
     height: '8%',
     width: '100%',
     margin: '1%'
+  },
+  buttonText: {
+    fontSize: 18,
+    letterSpacing: 0.5
   }
 })

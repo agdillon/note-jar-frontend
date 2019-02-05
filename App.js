@@ -3,6 +3,7 @@ import React from 'react'
 import { AppLoading } from 'expo'
 import { Container, Content, Text, Spinner } from 'native-base'
 import { StyleSheet, View, AsyncStorage, BackHandler } from 'react-native'
+import { LinearGradient } from 'expo'
 import NoteList from './components/NoteList'
 import LoginOrReg from './components/LoginOrReg'
 import Dashboard from './components/Dashboard'
@@ -235,51 +236,58 @@ export default class App extends React.Component {
     else {
       return (
         <Container>
-          <Content contentContainerStyle={styles.contentContainer}>
-          {this.state.error ? <Text style={{ color: 'red' }}> {this.state.error.message} </Text> : null}
-          <View>
-            {this.state.screen === LOGIN || this.state.screen === REGISTRATION
-              ? <LoginOrReg
-                  error={this.state.error}
-                  screen={this.state.screen}
-                  loginOrRegHandler={this.loginOrRegHandler}
+          <LinearGradient
+            colors={['#f9ecbb', 'white']}
+            start={[0, 0]}
+            end={[1, 1]}
+            style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}
+          >
+            <Content contentContainerStyle={styles.contentContainer}>
+            {this.state.error ? <Text style={{ color: 'red' }}> {this.state.error.message} </Text> : null}
+            <View>
+              {this.state.screen === LOGIN || this.state.screen === REGISTRATION
+                ? <LoginOrReg
+                    error={this.state.error}
+                    screen={this.state.screen}
+                    loginOrRegHandler={this.loginOrRegHandler}
+                    screenChangeHandler={this.screenChangeHandler}
+                  />
+                : null}
+              {this.state.screen === DASHBOARD
+                ? <Dashboard
+                  code={this.state.user ? this.state.user.code : null}
                   screenChangeHandler={this.screenChangeHandler}
+                  logoutHandler={this.logoutHandler}
                 />
-              : null}
-            {this.state.screen === DASHBOARD
-              ? <Dashboard
-                code={this.state.user ? this.state.user.code : null}
-                screenChangeHandler={this.screenChangeHandler}
-                logoutHandler={this.logoutHandler}
-              />
-              : null}
-            {this.state.screen === NOTE_LIST
-              ? <NoteList
-              notes={this.state.notes}
-              screenChangeHandler={this.screenChangeHandler}
-              />
-              : null}
-            {this.state.screen === CREATE
-              ? <Create
-              createNoteHandler={this.createNoteHandler}
-              tagTypes={this.state.tagTypes}
-              />
-              : null}
-            {this.state.screen === RANDOM
-              ? <Random
+                : null}
+              {this.state.screen === NOTE_LIST
+                ? <NoteList
                 notes={this.state.notes}
                 screenChangeHandler={this.screenChangeHandler}
                 />
-              : null}
-            {this.state.screen === FRIEND
-              ? <Friend
-                friendSubmitHandler={this.friendSubmitHandler}
-                screenChangeHandler={this.screenChangeHandler}
+                : null}
+              {this.state.screen === CREATE
+                ? <Create
+                createNoteHandler={this.createNoteHandler}
+                tagTypes={this.state.tagTypes}
                 />
-              : null}
-            {this.state.screen === ABOUT ? <About /> : null}
-          </View>
-          </Content>
+                : null}
+              {this.state.screen === RANDOM
+                ? <Random
+                  notes={this.state.notes}
+                  screenChangeHandler={this.screenChangeHandler}
+                  />
+                : null}
+              {this.state.screen === FRIEND
+                ? <Friend
+                  friendSubmitHandler={this.friendSubmitHandler}
+                  screenChangeHandler={this.screenChangeHandler}
+                  />
+                : null}
+              {this.state.screen === ABOUT ? <About /> : null}
+            </View>
+            </Content>
+          </LinearGradient>
         </Container>
       )
     }
