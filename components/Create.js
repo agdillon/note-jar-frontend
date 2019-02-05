@@ -40,7 +40,8 @@ export default class Create extends React.Component {
     return (
       <Container>
         <Content contentContainerStyle={styles.contentContainer}>
-          <Form style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}>
+          <Form style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+            <Text>Create a Note</Text>
             <Textarea
               rowSpan={5}
               bordered

@@ -30,7 +30,7 @@ export default class Friend extends React.Component {
     return (
       <Container>
         <Content contentContainerStyle={styles.contentContainer}>
-        <Text>Write a note for a friend</Text>
+        <Text>Write a Note for a Friend</Text>
 
         {this.props.error ? <Text style={{ color: "red" }}> {this.props.error.message} </Text> : null}
 

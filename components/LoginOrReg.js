@@ -43,10 +43,10 @@ export default class LoginOrReg extends React.Component {
       <Container>
         <Content contentContainerStyle={styles.contentContainer}>
           <Text>
-            {this.state.screen === REGISTRATION ? 'Create an account' : 'Sign in to your account'}
+            {this.state.screen === REGISTRATION ? 'Create an Account' : 'Sign in to Your Account'}
           </Text>
 
-          {this.state.error ? <Text style={{color: "red"}}> {this.state.error.message} </Text> : null}
+          {this.state.error ? <Text style={{color: 'red'}}> {this.state.error.message} </Text> : null}
 
           <Form>
             <Item regular style={localStyles.formField}>
@@ -80,7 +80,7 @@ export default class LoginOrReg extends React.Component {
             when on, send to server daily_method = "push"*/}
             {this.state.screen === REGISTRATION ?
               <View style={localStyles.dailyNoteContainer}>
-                <Label style={{ flex:1 }}>Daily Note</Label>
+                <Label style={{ flex:3, fontSize: 16 }}>Get a daily push notification with a random note</Label>
                 <Switch
                   value={this.state.dailyNoteOn}
                   onValueChange={dailyNoteOn => this.setState({ dailyNoteOn })}
@@ -132,8 +132,8 @@ export default class LoginOrReg extends React.Component {
 
 const localStyles = StyleSheet.create({
   dailyNoteContainer: {
-    height: 50,
-    width: 200,
+    height: 65,
+    width: 240,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
@@ -145,6 +145,7 @@ const localStyles = StyleSheet.create({
   },
   button: {
     width: 80,
-    marginLeft: 80
+    marginLeft: 80,
+    marginTop: 5
   }
 })

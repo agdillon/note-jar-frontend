@@ -7,10 +7,11 @@ function NoteList({ notes, screenChangeHandler }) {
   return (
     <Container>
       <Content contentContainerStyle={[styles.contentContainer, { marginTop: '10%', width: '90%' }]}>
+        <Text>All Notes</Text>
         {notes.length === 0
           ? (
             <Text>
-              You don&apos;t have any notes yet.
+              You don&apos;t have any notes yet.&nbsp;
               <TouchableNativeFeedback onPress={() => screenChangeHandler('Create')}>
                 <Text style={{ color: 'blue' }}>
                   Write one!
@@ -28,7 +29,7 @@ function NoteList({ notes, screenChangeHandler }) {
                     <Text>{item.content}</Text>
                   </CardItem>
                   <CardItem footer>
-                    {item.tag_name.map((tag, i) => tag ? <Badge key={i} style={localStyles.tag}><Text>{tag}</Text></Badge> : null)}
+                    {item.tag_name.map((tag, i) => <Badge key={i} style={localStyles.tag}><Text>{tag}</Text></Badge>)}
                   </CardItem>
                 </Card>
               )}
