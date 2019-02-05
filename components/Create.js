@@ -13,11 +13,6 @@ export default class Create extends React.Component {
     }
   }
 
-  // situations to handle: you're the user, you're a friend
-
-  // tags <-- collect here via clickable buttons or tags, chips, whatever
-  // const tagTypes = ['compliment', 'encouragement', 'gratitude', 'action', 'memory', 'humor']
-
   onSubmitForm = () => {
     let { content, type, tags } = this.state
     let formData = { content, type, tags }
@@ -27,23 +22,97 @@ export default class Create extends React.Component {
     this.setState({ content: '', tags: [] })
   }
 
+  toggleTag(tagClicked) {
+    // if this.state.tags already contains tag clicked, then remove it
+    if (this.state.tags.includes(tagClicked)) {
+      this.setState(prevState => {
+        const tagIndex = prevState.tags.indexOf(tagClicked)
+        return { tags: prevState.tags.slice(0, tagIndex).concat(prevState.tags.slice(tagIndex + 1)) }
+      })
+    }
+    // if it doesn't contain it, add it
+    else {
+      this.setState(prevState => ({ tags: [...prevState.tags, tagClicked] }))
+    }
+  }
+
   render() {
     return (
       <Container>
         <Content contentContainerStyle={styles.contentContainer}>
-          <Text>Create a Note</Text>
-          <Form>
+          <Form style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}>
             <Textarea
               rowSpan={5}
               bordered
               value={this.state.content}
+              placeholder='Write your note here'
               onChangeText={content => this.setState({ content })}
-              onSubmitEditing={this.onSubmitForm}
               returnKeyType="send"
               style={localStyles.formField}
             />
 
-            <Button onPress={this.onSubmitForm} title='Submit' style={[styles.button, localStyles.button]}>
+            {/* {this.props.tagTypes.map((tag, i) => (
+                {i % 2 === 1 ? <View style={styles.tagContainer}> : null}
+                <Button
+                  small
+                  style={this.state.tags.includes(tag) ? styles.tagSelected : styles.tagUnselected}
+                  onPress={() => this.toggleTag(tag)}
+                >
+                  <Text uppercase={false}>{tag}</Text>
+                </Button>
+                {i % 2 === 0 ? </View> : null}
+            ))} */}
+
+            <View style={styles.tagContainer}>
+              <Button
+                small
+                style={this.state.tags.includes('encouragement') ? styles.tagSelected : styles.tagUnselected}
+                onPress={() => this.toggleTag('encouragement')}
+              >
+                <Text uppercase={false} style={this.state.tags.includes('encouragement') ? null : { color: 'black' }}>encouragement</Text>
+              </Button>
+              <Button
+                small
+                style={this.state.tags.includes('memory') ? styles.tagSelected : styles.tagUnselected}
+                onPress={() => this.toggleTag('memory')}
+              >
+                <Text uppercase={false} style={this.state.tags.includes('memory') ? null : { color: 'black' }}>memory</Text>
+              </Button>
+            </View>
+            <View style={styles.tagContainer}>
+              <Button
+                small
+                style={this.state.tags.includes('gratitude') ? styles.tagSelected : styles.tagUnselected}
+                onPress={() => this.toggleTag('gratitude')}
+              >
+                <Text uppercase={false} style={this.state.tags.includes('gratitude') ? null : { color: 'black' }}>gratitude</Text>
+              </Button>
+              <Button
+                small
+                style={this.state.tags.includes('action') ? styles.tagSelected : styles.tagUnselected}
+                onPress={() => this.toggleTag('action')}
+              >
+                <Text uppercase={false} style={this.state.tags.includes('action') ? null : { color: 'black' }}>action</Text>
+              </Button>
+            </View>
+            <View style={styles.tagContainer}>
+              <Button
+                small
+                style={this.state.tags.includes('compliment') ? styles.tagSelected : styles.tagUnselected}
+                onPress={() => this.toggleTag('compliment')}
+              >
+                <Text uppercase={false} style={this.state.tags.includes('compliment') ? null : { color: 'black' }}>compliment</Text>
+              </Button>
+              <Button
+                small
+                style={this.state.tags.includes('humor') ? styles.tagSelected : styles.tagUnselected}
+                onPress={() => this.toggleTag('humor')}
+              >
+                <Text uppercase={false} style={this.state.tags.includes('humor') ? null : { color: 'black' }}>humor</Text>
+              </Button>
+            </View>
+
+            <Button onPress={this.onSubmitForm} title='Submit' style={[styles.button, localStyles.submitButton]}>
               <Text uppercase={false} style={styles.buttonText}>Submit</Text>
             </Button>
           </Form>
@@ -58,8 +127,9 @@ const localStyles = StyleSheet.create({
     width: 240,
     margin: 5
   },
-  button: {
+  submitButton: {
     width: 80,
-    marginLeft: 80
+    marginLeft: 80,
+    marginTop: 5
   }
 })

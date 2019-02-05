@@ -36,7 +36,8 @@ export default class App extends React.Component {
       token: null,
       notes: [],
       error: null,
-      screen: null
+      screen: null,
+      tagTypes: ['encouragement', 'memory', 'gratitude', 'action', 'compliment', 'humor']
     }
   }
 
@@ -261,6 +262,7 @@ export default class App extends React.Component {
             {this.state.screen === CREATE
               ? <Create
               createNoteHandler={this.createNoteHandler}
+              tagTypes={this.state.tagTypes}
               />
               : null}
             {this.state.screen === RANDOM

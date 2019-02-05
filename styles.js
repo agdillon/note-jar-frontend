@@ -12,5 +12,17 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: 'black'
+  },
+  tagContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center'
+  },
+  tagSelected: {
+    backgroundColor: 'cadetblue',
+    margin: 2
+  },
+  tagUnselected: {
+    backgroundColor: 'white',
+    margin: 2
   }
 })
