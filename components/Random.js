@@ -23,10 +23,12 @@ function Random({ notes, screenChangeHandler }) {
           )
           : (
             <Card style={styles.card}>
-              { randomNote.author
+              {randomNote.author
                 ? (
                   <CardItem header>
-                    <Text style={{ fontWeight: 'normal', marginBottom: '-8%', marginTop: '-1%' }}>Author: {randomNote.author}</Text>
+                    <Text style={{ fontWeight: 'normal', marginBottom: '-8%', marginTop: '-1%' }}>
+                      Author: {randomNote.author}
+                    </Text>
                   </CardItem>
                 )
                 : null
@@ -49,13 +51,3 @@ function Random({ notes, screenChangeHandler }) {
 }
 
 export default Random
-
-// const localStyles = StyleSheet.create({
-//   tag: {
-//     backgroundColor: 'cadetblue',
-//     marginLeft: 2,
-//     marginRight: 2,
-//     marginBottom: 2,
-//     marginTop: '-4%'
-//   }
-// })

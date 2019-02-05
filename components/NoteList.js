@@ -7,7 +7,7 @@ function NoteList({ notes, screenChangeHandler }) {
   return (
     <Container style={styles.container}>
       <Content contentContainerStyle={[styles.contentContainer, localStyles.contentContainer]}>
-        <Text style={[styles.titleText, { marginLeft: '-8%' }]}>All Notes</Text>
+        <Text style={[styles.titleText, { marginLeft: '-8%' }]}>Your Notes</Text>
         {notes.length === 0
           ? (
             <Text>
@@ -25,10 +25,12 @@ function NoteList({ notes, screenChangeHandler }) {
               keyExtractor={note => note.id.toString()}
               renderItem={({ item }) => (
                 <Card style={styles.card}>
-                  { item.author
+                  {item.author
                     ? (
                       <CardItem header>
-                        <Text style={{ fontWeight: 'normal', marginBottom: '-8%', marginTop: '-1%' }}>Author: {item.author}</Text>
+                        <Text style={{ fontWeight: 'normal', marginBottom: '-8%', marginTop: '-1%' }}>
+                          Author: {item.author}
+                        </Text>
                       </CardItem>
                     )
                     : null

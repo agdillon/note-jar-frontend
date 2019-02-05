@@ -78,6 +78,7 @@ const localStyles = StyleSheet.create({
   },
   button: {
     width: 90,
-    marginLeft: 70
+    marginLeft: 70,
+    marginTop: 5
   }
 })

@@ -6,7 +6,7 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: 'black',
-    fontSize: 16
+    fontSize: 17
   },
   card: {
     width: '90%'
@@ -45,7 +45,7 @@ export default StyleSheet.create({
     margin: 2
   },
   titleText: {
-    fontSize: 18,
+    fontSize: 20,
     letterSpacing: 1,
     marginBottom: 5
   }
