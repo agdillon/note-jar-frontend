@@ -6,7 +6,7 @@ import styles from '../styles'
 function Invite({ code }) {
   return (
     <View style={localStyles.contentContainer}>
-      <Text style={{ marginTop: 10 }}>
+      <Text style={{ marginTop: 8, marginLeft: 4 }}>
         This is your friend code.  Copy and paste it to your friends so they can write you notes too!
       </Text>
 

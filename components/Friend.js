@@ -30,7 +30,7 @@ export default class Friend extends React.Component {
     return (
       <Container style={{ backgroundColor: 'transparent' }}>
         <Content contentContainerStyle={styles.contentContainer}>
-        <Text styles={styles.titleText}>Write a Note for a Friend</Text>
+        <Text style={styles.titleText}>Write a Note for a Friend</Text>
 
         {this.props.error ? <Text style={{ color: "red" }}> {this.props.error.message} </Text> : null}
 
@@ -77,7 +77,7 @@ const localStyles = StyleSheet.create({
     backgroundColor: 'white'
   },
   button: {
-    width: 80,
-    marginLeft: 80
+    width: 90,
+    marginLeft: 70
   }
 })

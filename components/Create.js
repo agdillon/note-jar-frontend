@@ -41,7 +41,7 @@ export default class Create extends React.Component {
       <Container style={{ backgroundColor: 'transparent' }}>
         <Content contentContainerStyle={styles.contentContainer}>
           <Form style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            <Text styles={styles.titleText}>Create a Note</Text>
+            <Text style={styles.titleText}>Create a Note</Text>
             <Textarea
               rowSpan={5}
               bordered
@@ -131,8 +131,8 @@ const localStyles = StyleSheet.create({
     backgroundColor: 'white'
   },
   submitButton: {
-    width: 80,
-    marginLeft: 80,
+    width: 90,
+    marginLeft: 70,
     marginTop: 5
   }
 })

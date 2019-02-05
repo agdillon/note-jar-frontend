@@ -1,16 +1,17 @@
 import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
-  contentContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
   button: {
     backgroundColor: 'powderblue'
   },
   buttonText: {
-    color: 'black'
+    color: 'black',
+    fontSize: 16
+  },
+  contentContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   tagContainer: {
     flexDirection: 'row',

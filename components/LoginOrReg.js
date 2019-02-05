@@ -80,7 +80,7 @@ export default class LoginOrReg extends React.Component {
             when on, send to server daily_method = "push"*/}
             {this.state.screen === REGISTRATION ?
               <View style={localStyles.dailyNoteContainer}>
-                <Label style={{ flex:3, fontSize: 16 }}>Get a daily push notification with a random note</Label>
+                <Label style={{ flex:3, fontSize: 16 }}>Daily push notification with a random note</Label>
                 <Switch
                   value={this.state.dailyNoteOn}
                   onValueChange={dailyNoteOn => this.setState({ dailyNoteOn })}
@@ -133,7 +133,7 @@ export default class LoginOrReg extends React.Component {
 const localStyles = StyleSheet.create({
   dailyNoteContainer: {
     height: 65,
-    width: 240,
+    width: 220,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
@@ -145,8 +145,8 @@ const localStyles = StyleSheet.create({
     backgroundColor: 'white'
   },
   button: {
-    width: 80,
-    marginLeft: 80,
+    width: 90,
+    marginLeft: 70,
     marginTop: 5,
     marginBottom: 15
   }

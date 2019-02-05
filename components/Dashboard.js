@@ -47,7 +47,8 @@ const localStyles = StyleSheet.create({
     margin: '1%'
   },
   buttonText: {
-    fontSize: 18,
-    letterSpacing: 0.5
+    marginTop: 5,
+    // fontSize: 18,
+    // letterSpacing: 0.5
   }
 })

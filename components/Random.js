@@ -9,7 +9,7 @@ function Random({ notes, screenChangeHandler }) {
   return (
     <Container style={{ backgroundColor: 'transparent' }}>
       <Content contentContainerStyle={[styles.contentContainer, { width: '90%' }]}>
-        <Text styles={styles.titleText}>Random Note</Text>
+        <Text style={styles.titleText}>Random Note</Text>
         {notes.length === 0
           ? (
             <Text>

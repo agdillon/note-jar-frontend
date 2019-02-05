@@ -7,7 +7,7 @@ function NoteList({ notes, screenChangeHandler }) {
   return (
     <Container style={{ backgroundColor: 'transparent' }}>
       <Content contentContainerStyle={[styles.contentContainer, { marginTop: '10%', width: '90%' }]}>
-        <Text styles={styles.titleText}>All Notes</Text>
+        <Text style={styles.titleText}>All Notes</Text>
         {notes.length === 0
           ? (
             <Text>
