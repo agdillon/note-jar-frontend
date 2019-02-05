@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, FlatList, TouchableNativeFeedback } from 'react-native'
-import { Container, Content, Text, Card, CardItem } from 'native-base'
+import { Container, Content, Text, Card, CardItem, Badge } from 'native-base'
 import styles from '../styles'
 
 function NoteList({ notes, screenChangeHandler }) {
@@ -27,6 +27,9 @@ function NoteList({ notes, screenChangeHandler }) {
                   <CardItem>
                     <Text>{item.content}</Text>
                   </CardItem>
+                  <CardItem footer>
+                    {item.tag_name.map((tag, i) => tag ? <Badge key={i} style={localStyles.tag}><Text>{tag}</Text></Badge> : null)}
+                  </CardItem>
                 </Card>
               )}
             />
@@ -37,3 +40,10 @@ function NoteList({ notes, screenChangeHandler }) {
 }
 
 export default NoteList
+
+const localStyles = StyleSheet.create({
+  tag: {
+    backgroundColor: 'cadetblue',
+    margin: 2
+  }
+})
