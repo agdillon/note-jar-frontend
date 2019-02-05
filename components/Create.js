@@ -56,7 +56,7 @@ export default class Create extends React.Component {
                 {i % 2 === 1 ? <View style={styles.tagContainer}> : null}
                 <Button
                   small
-                  style={this.state.tags.includes(tag) ? styles.tagSelected : styles.tagUnselected}
+                  style={this.state.tags.includes(tag) ? styles.tagButtonSelected : styles.tagButtonUnselected}
                   onPress={() => this.toggleTag(tag)}
                 >
                   <Text uppercase={false}>{tag}</Text>
@@ -64,49 +64,49 @@ export default class Create extends React.Component {
                 {i % 2 === 0 ? </View> : null}
             ))} */}
 
-            <View style={[styles.tagContainer, { marginTop: 5 }]}>
+            <View style={[styles.tagButtonContainer, { marginTop: 5 }]}>
               <Button
                 small
-                style={this.state.tags.includes('encouragement') ? styles.tagSelected : styles.tagUnselected}
+                style={this.state.tags.includes('encouragement') ? styles.tagButtonSelected : styles.tagButtonUnselected}
                 onPress={() => this.toggleTag('encouragement')}
               >
                 <Text uppercase={false} style={this.state.tags.includes('encouragement') ? null : { color: 'black' }}>encouragement</Text>
               </Button>
               <Button
                 small
-                style={this.state.tags.includes('memory') ? styles.tagSelected : styles.tagUnselected}
+                style={this.state.tags.includes('memory') ? styles.tagButtonSelected : styles.tagButtonUnselected}
                 onPress={() => this.toggleTag('memory')}
               >
                 <Text uppercase={false} style={this.state.tags.includes('memory') ? null : { color: 'black' }}>memory</Text>
               </Button>
             </View>
-            <View style={styles.tagContainer}>
+            <View style={styles.tagButtonContainer}>
               <Button
                 small
-                style={this.state.tags.includes('gratitude') ? styles.tagSelected : styles.tagUnselected}
+                style={this.state.tags.includes('gratitude') ? styles.tagButtonSelected : styles.tagButtonUnselected}
                 onPress={() => this.toggleTag('gratitude')}
               >
                 <Text uppercase={false} style={this.state.tags.includes('gratitude') ? null : { color: 'black' }}>gratitude</Text>
               </Button>
               <Button
                 small
-                style={this.state.tags.includes('action') ? styles.tagSelected : styles.tagUnselected}
+                style={this.state.tags.includes('action') ? styles.tagButtonSelected : styles.tagButtonUnselected}
                 onPress={() => this.toggleTag('action')}
               >
                 <Text uppercase={false} style={this.state.tags.includes('action') ? null : { color: 'black' }}>action</Text>
               </Button>
             </View>
-            <View style={styles.tagContainer}>
+            <View style={styles.tagButtonContainer}>
               <Button
                 small
-                style={this.state.tags.includes('compliment') ? styles.tagSelected : styles.tagUnselected}
+                style={this.state.tags.includes('compliment') ? styles.tagButtonSelected : styles.tagButtonUnselected}
                 onPress={() => this.toggleTag('compliment')}
               >
                 <Text uppercase={false} style={this.state.tags.includes('compliment') ? null : { color: 'black' }}>compliment</Text>
               </Button>
               <Button
                 small
-                style={this.state.tags.includes('humor') ? styles.tagSelected : styles.tagUnselected}
+                style={this.state.tags.includes('humor') ? styles.tagButtonSelected : styles.tagButtonUnselected}
                 onPress={() => this.toggleTag('humor')}
               >
                 <Text uppercase={false} style={this.state.tags.includes('humor') ? null : { color: 'black' }}>humor</Text>

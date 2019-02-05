@@ -23,14 +23,24 @@ function Random({ notes, screenChangeHandler }) {
           )
           : (
             <Card style={styles.card}>
-              <CardItem body style={styles.cardItem}>
+              { randomNote.author
+                ? (
+                  <CardItem header>
+                    <Text style={{ fontWeight: 'normal', marginBottom: '-8%', marginTop: '-1%' }}>Author: {randomNote.author}</Text>
+                  </CardItem>
+                )
+                : null
+              }
+              <CardItem body style={styles.cardItemBody}>
                 <Text style={styles.cardText}>
                   {randomNote.content}
                 </Text>
               </CardItem>
-              <CardItem footer>
-                {randomNote.tag_name.map((tag, i) => <Badge key={i} style={localStyles.tag}><Text>{tag}</Text></Badge>)}
-              </CardItem>
+              {randomNote.tag_name.length > 0
+                ? <CardItem footer>
+                  {randomNote.tag_name.map((tag, i) => <Badge key={i} style={styles.tag}><Text>{tag}</Text></Badge>)}
+                </CardItem>
+                : null}
             </Card>
           )}
       </Content>
@@ -40,9 +50,12 @@ function Random({ notes, screenChangeHandler }) {
 
 export default Random
 
-const localStyles = StyleSheet.create({
-  tag: {
-    backgroundColor: 'cadetblue',
-    margin: 2
-  }
-})
+// const localStyles = StyleSheet.create({
+//   tag: {
+//     backgroundColor: 'cadetblue',
+//     marginLeft: 2,
+//     marginRight: 2,
+//     marginBottom: 2,
+//     marginTop: '-4%'
+//   }
+// })

@@ -25,12 +25,24 @@ function NoteList({ notes, screenChangeHandler }) {
               keyExtractor={note => note.id.toString()}
               renderItem={({ item }) => (
                 <Card style={styles.card}>
-                  <CardItem body style={styles.cardItem}>
+                  { item.author
+                    ? (
+                      <CardItem header>
+                        <Text style={{ fontWeight: 'normal', marginBottom: '-8%', marginTop: '-1%' }}>Author: {item.author}</Text>
+                      </CardItem>
+                    )
+                    : null
+                  }
+                  <CardItem body style={styles.cardItemBody}>
                     <Text style={styles.cardText}>{item.content}</Text>
                   </CardItem>
-                  <CardItem footer>
-                    {item.tag_name.map((tag, i) => <Badge key={i} style={localStyles.tag}><Text>{tag}</Text></Badge>)}
-                  </CardItem>
+                  {item.tag_name.length > 0
+                    ? (
+                      <CardItem footer>
+                        {item.tag_name.map((tag, i) => <Badge key={i} style={styles.tag}><Text>{tag}</Text></Badge>)}
+                      </CardItem>
+                    )
+                    : null}
                 </Card>
               )}
             />
@@ -47,9 +59,5 @@ const localStyles = StyleSheet.create({
     marginTop: '12%',
     marginLeft: '2%',
     width: '104%'
-  },
-  tag: {
-    backgroundColor: 'cadetblue',
-    margin: 2
   }
 })

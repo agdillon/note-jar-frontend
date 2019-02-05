@@ -11,7 +11,7 @@ export default StyleSheet.create({
   card: {
     width: '90%'
   },
-  cardItem: {
+  cardItemBody: {
     width: '100%'
   },
   cardText: {
@@ -25,15 +25,22 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  tagContainer: {
+  tag: {
+    backgroundColor: 'cadetblue',
+    marginLeft: 2,
+    marginRight: 2,
+    marginBottom: 2,
+    marginTop: '-4%'
+  },
+  tagButtonContainer: {
     flexDirection: 'row',
     justifyContent: 'center'
   },
-  tagSelected: {
+  tagButtonSelected: {
     backgroundColor: 'cadetblue',
     margin: 2
   },
-  tagUnselected: {
+  tagButtonUnselected: {
     backgroundColor: 'white',
     margin: 2
   },
