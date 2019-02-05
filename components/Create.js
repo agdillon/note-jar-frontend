@@ -38,7 +38,7 @@ export default class Create extends React.Component {
 
   render() {
     return (
-      <Container style={{ backgroundColor: 'transparent' }}>
+      <Container style={styles.container}>
         <Content contentContainerStyle={styles.contentContainer}>
           <Form style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
             <Text style={styles.titleText}>Create a Note</Text>
@@ -64,7 +64,7 @@ export default class Create extends React.Component {
                 {i % 2 === 0 ? </View> : null}
             ))} */}
 
-            <View style={styles.tagContainer}>
+            <View style={[styles.tagContainer, { marginTop: 5 }]}>
               <Button
                 small
                 style={this.state.tags.includes('encouragement') ? styles.tagSelected : styles.tagUnselected}
@@ -132,7 +132,7 @@ const localStyles = StyleSheet.create({
   },
   submitButton: {
     width: 90,
-    marginLeft: 70,
-    marginTop: 5
+    marginLeft: 75,
+    marginTop: 12
   }
 })

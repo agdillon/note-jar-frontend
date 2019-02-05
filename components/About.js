@@ -5,7 +5,7 @@ import styles from '../styles'
 
 function About() {
   return (
-    <Container style={{ backgroundColor: 'transparent' }}>
+    <Container style={styles.container}>
       <Content contentContainerStyle={styles.contentContainer}>
         <Text style={styles.titleText}>About Note Jar</Text>
         <Text style={localStyles.paragraph}>

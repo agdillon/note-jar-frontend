@@ -7,8 +7,8 @@ function Random({ notes, screenChangeHandler }) {
   const randomNote = notes[Math.floor(Math.random() * notes.length)]
 
   return (
-    <Container style={{ backgroundColor: 'transparent' }}>
-      <Content contentContainerStyle={[styles.contentContainer, { width: '90%' }]}>
+    <Container style={styles.container}>
+      <Content contentContainerStyle={styles.contentContainer}>
         <Text style={styles.titleText}>Random Note</Text>
         {notes.length === 0
           ? (
@@ -22,9 +22,9 @@ function Random({ notes, screenChangeHandler }) {
             </Text>
           )
           : (
-            <Card>
-              <CardItem>
-                <Text>
+            <Card style={styles.card}>
+              <CardItem body style={styles.cardItem}>
+                <Text style={styles.cardText}>
                   {randomNote.content}
                 </Text>
               </CardItem>

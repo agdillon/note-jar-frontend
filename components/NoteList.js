@@ -5,9 +5,9 @@ import styles from '../styles'
 
 function NoteList({ notes, screenChangeHandler }) {
   return (
-    <Container style={{ backgroundColor: 'transparent' }}>
-      <Content contentContainerStyle={[styles.contentContainer, { marginTop: '10%', width: '90%' }]}>
-        <Text style={styles.titleText}>All Notes</Text>
+    <Container style={styles.container}>
+      <Content contentContainerStyle={[styles.contentContainer, localStyles.contentContainer]}>
+        <Text style={[styles.titleText, { marginLeft: '-8%' }]}>All Notes</Text>
         {notes.length === 0
           ? (
             <Text>
@@ -24,9 +24,9 @@ function NoteList({ notes, screenChangeHandler }) {
               data={notes}
               keyExtractor={note => note.id.toString()}
               renderItem={({ item }) => (
-                <Card>
-                  <CardItem>
-                    <Text>{item.content}</Text>
+                <Card style={styles.card}>
+                  <CardItem body style={styles.cardItem}>
+                    <Text style={styles.cardText}>{item.content}</Text>
                   </CardItem>
                   <CardItem footer>
                     {item.tag_name.map((tag, i) => <Badge key={i} style={localStyles.tag}><Text>{tag}</Text></Badge>)}
@@ -43,6 +43,11 @@ function NoteList({ notes, screenChangeHandler }) {
 export default NoteList
 
 const localStyles = StyleSheet.create({
+  contentContainer: {
+    marginTop: '12%',
+    marginLeft: '2%',
+    width: '104%'
+  },
   tag: {
     backgroundColor: 'cadetblue',
     margin: 2

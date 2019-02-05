@@ -28,7 +28,7 @@ export default class Friend extends React.Component {
   // then they'll be taken to create component
   render() {
     return (
-      <Container style={{ backgroundColor: 'transparent' }}>
+      <Container style={styles.container}>
         <Content contentContainerStyle={styles.contentContainer}>
         <Text style={styles.titleText}>Write a Note for a Friend</Text>
 

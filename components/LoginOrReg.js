@@ -40,7 +40,7 @@ export default class LoginOrReg extends React.Component {
 
   render() {
     return (
-      <Container style={{ backgroundColor: 'transparent' }}>
+      <Container style={styles.container}>
         <Content contentContainerStyle={styles.contentContainer}>
           <Text style={styles.titleText}>
             {this.state.screen === REGISTRATION ? 'Create an Account' : 'Sign in to Your Account'}

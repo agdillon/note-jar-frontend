@@ -8,6 +8,18 @@ export default StyleSheet.create({
     color: 'black',
     fontSize: 16
   },
+  card: {
+    width: '90%'
+  },
+  cardItem: {
+    width: '100%'
+  },
+  cardText: {
+    width: '100%'
+  },
+  container: {
+    backgroundColor: 'transparent'
+  },
   contentContainer: {
     flex: 1,
     alignItems: 'center',

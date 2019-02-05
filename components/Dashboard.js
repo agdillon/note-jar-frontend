@@ -6,7 +6,7 @@ import styles from '../styles'
 
 function Dashboard({ screenChangeHandler, logoutHandler, code }) {
   return (
-    <Container style={{ backgroundColor: 'transparent' }}>
+    <Container style={styles.container}>
       <Content contentContainerStyle={styles.contentContainer}>
         <Button onPress={() => screenChangeHandler('Random')} title='Get a random note' style={[styles.button, localStyles.button]}>
           <Text uppercase={false} style={[styles.buttonText, localStyles.buttonText]}>Get a random note</Text>
