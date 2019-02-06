@@ -30,10 +30,10 @@ function NoteList({ notes, screenChangeHandler, deleteNoteHandler }) {
                     <Button
                       onPress={() => { deleteNoteHandler(item.id) }}
                       title='Delete note'
-                      style={[styles.button, { height: 45, width: 45, marginLeft: 2 }]}
+                      style={[styles.button, { height: 35, width: 35, marginLeft: 10, marginTop: 4 }]}
                       iconLeft
                     >
-                      <Icon type='FontAwesome' name='trash' style={[styles.buttonText, { fontSize: 24, marginLeft: 13 }]} />
+                      <Icon type='FontAwesome' name='trash' style={[styles.buttonText, { fontSize: 20, marginLeft: 10 }]} />
                     </Button>
                   </CardItem>
                   {item.author
