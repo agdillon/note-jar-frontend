@@ -175,6 +175,33 @@ export default class App extends React.Component {
     }
   }
 
+  deleteNoteHandler = async (noteId) => {
+    this.setState({ isLoading: true })
+
+    let response = await fetch(`http://note-jar.herokuapp.com/notes/${noteId}`, {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.state.token}`
+      }
+    })
+
+    if (response.status.toString()[0] === '2') {
+      try {
+        await this.getNotes()
+        this.setState({ isLoading: false })
+      }
+      catch (error) {
+        this.setState({ error, isLoading: false })
+      }
+    }
+    else {
+      let body = await response.json()
+      this.setState({ error: body, isLoading: false })
+    }
+  }
+
   logoutHandler = async () => {
     await AsyncStorage.removeItem('Token')
     this.setState({ userId: null, user: null, token: null, notes: [], screen: LOGIN })
@@ -264,6 +291,7 @@ export default class App extends React.Component {
                 ? <NoteList
                 notes={this.state.notes}
                 screenChangeHandler={this.screenChangeHandler}
+                deleteNoteHandler={this.deleteNoteHandler}
                 />
                 : null}
               {this.state.screen === CREATE

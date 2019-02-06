@@ -1,16 +1,16 @@
 import React from 'react'
 import { StyleSheet, FlatList, TouchableNativeFeedback } from 'react-native'
-import { Container, Content, Text, Card, CardItem, Badge } from 'native-base'
+import { Container, Content, Text, Card, CardItem, Badge, Button, Icon } from 'native-base'
 import styles from '../styles'
 
-function NoteList({ notes, screenChangeHandler }) {
+function NoteList({ notes, screenChangeHandler, deleteNoteHandler }) {
   return (
     <Container style={styles.container}>
       <Content contentContainerStyle={[styles.contentContainer, localStyles.contentContainer]}>
         <Text style={[styles.titleText, { marginLeft: '-8%' }]}>Your Notes</Text>
         {notes.length === 0
           ? (
-            <Text>
+            <Text style={{ width: '100%' }}>
               You don&apos;t have any notes yet.&nbsp;
               <TouchableNativeFeedback onPress={() => screenChangeHandler('Create')}>
                 <Text style={{ color: 'blue' }}>
@@ -24,9 +24,17 @@ function NoteList({ notes, screenChangeHandler }) {
               data={notes}
               keyExtractor={note => note.id.toString()}
               renderItem={({ item }) => (
-                <Card style={styles.card}>
+                <Card style={{ width: '91%'}}>
                   <CardItem body style={styles.cardItemBody}>
-                    <Text style={styles.cardText}>{item.content}</Text>
+                    <Text style={[styles.cardText, { width: '82%' }]}>{item.content}</Text>
+                    <Button
+                      onPress={() => { deleteNoteHandler(item.id) }}
+                      title='Delete note'
+                      style={[styles.button, { height: 45, width: 45, marginLeft: 2 }]}
+                      iconLeft
+                    >
+                      <Icon type='FontAwesome' name='trash' style={[styles.buttonText, { fontSize: 24, marginLeft: 13 }]} />
+                    </Button>
                   </CardItem>
                   {item.author
                     ? (
@@ -59,7 +67,7 @@ export default NoteList
 const localStyles = StyleSheet.create({
   contentContainer: {
     marginTop: '12%',
-    marginLeft: '2%',
-    width: '104%'
+    marginLeft: '3%',
+    width: '101%'
   }
 })
