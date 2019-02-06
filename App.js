@@ -38,7 +38,8 @@ export default class App extends React.Component {
       notes: [],
       error: null,
       screen: null,
-      tagTypes: ['encouragement', 'memory', 'gratitude', 'action', 'compliment', 'humor']
+      tagTypes: ['encouragement', 'memory', 'gratitude', 'action', 'compliment', 'humor'],
+      createdNoteAsFriend: false
     }
   }
 
@@ -79,7 +80,7 @@ export default class App extends React.Component {
     // if user is a friend (has entered friend code) and they're on Create screen,
     // back button should take them back to Friend login screen
     if (this.state.screen === CREATE && this.state.code) {
-      this.setState({ screen: FRIEND, code: null, author: null })
+      this.setState({ screen: FRIEND, code: null, author: null, createdNoteAsFriend: false })
       return true
     }
     else if (this.state.screen === FRIEND) {
@@ -161,9 +162,9 @@ export default class App extends React.Component {
           await this.getNotes()
           this.setState({ screen: NOTE_LIST, isLoading: false })
         }
-        // if friend, send them to blank create form again, with message saying successfully sent?
+        // if friend, send them to blank create form again, with message saying successfully sent
         else {
-          this.setState({ screen: CREATE, isLoading: false })
+          this.setState({ screen: CREATE, createdNoteAsFriend: true, isLoading: false })
         }
       }
       catch (error) {
@@ -296,8 +297,9 @@ export default class App extends React.Component {
                 : null}
               {this.state.screen === CREATE
                 ? <Create
-                createNoteHandler={this.createNoteHandler}
                 tagTypes={this.state.tagTypes}
+                createdNoteAsFriend={this.state.createdNoteAsFriend}
+                createNoteHandler={this.createNoteHandler}
                 />
                 : null}
               {this.state.screen === RANDOM

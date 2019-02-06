@@ -42,6 +42,7 @@ export default class Create extends React.Component {
         <Content contentContainerStyle={styles.contentContainer}>
           <Form style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
             <Text style={styles.titleText}>Create a Note</Text>
+            {this.props.createdNoteAsFriend ? <Text>Note successfully created!</Text> : null}
             <Textarea
               rowSpan={5}
               bordered
