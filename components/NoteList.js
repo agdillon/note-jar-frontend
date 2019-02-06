@@ -25,22 +25,22 @@ function NoteList({ notes, screenChangeHandler }) {
               keyExtractor={note => note.id.toString()}
               renderItem={({ item }) => (
                 <Card style={styles.card}>
+                  <CardItem body style={styles.cardItemBody}>
+                    <Text style={styles.cardText}>{item.content}</Text>
+                  </CardItem>
                   {item.author
                     ? (
-                      <CardItem header>
-                        <Text style={{ fontWeight: 'normal', marginBottom: '-8%', marginTop: '-1%' }}>
+                      <CardItem>
+                        <Text style={styles.cardItemAuthor}>
                           Author: {item.author}
                         </Text>
                       </CardItem>
                     )
                     : null
                   }
-                  <CardItem body style={styles.cardItemBody}>
-                    <Text style={styles.cardText}>{item.content}</Text>
-                  </CardItem>
                   {item.tag_name.length > 0
                     ? (
-                      <CardItem footer>
+                      <CardItem>
                         {item.tag_name.map((tag, i) => <Badge key={i} style={styles.tag}><Text>{tag}</Text></Badge>)}
                       </CardItem>
                     )

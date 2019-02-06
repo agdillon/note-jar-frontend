@@ -23,23 +23,23 @@ function Random({ notes, screenChangeHandler }) {
           )
           : (
             <Card style={styles.card}>
+              <CardItem body style={styles.cardItemBody}>
+                <Text style={styles.cardText}>
+                  {randomNote.content}
+                </Text>
+              </CardItem>
               {randomNote.author
                 ? (
-                  <CardItem header>
-                    <Text style={{ fontWeight: 'normal', marginBottom: '-8%', marginTop: '-1%' }}>
+                  <CardItem>
+                    <Text style={styles.cardItemAuthor}>
                       Author: {randomNote.author}
                     </Text>
                   </CardItem>
                 )
                 : null
               }
-              <CardItem body style={styles.cardItemBody}>
-                <Text style={styles.cardText}>
-                  {randomNote.content}
-                </Text>
-              </CardItem>
               {randomNote.tag_name.length > 0
-                ? <CardItem footer>
+                ? <CardItem>
                   {randomNote.tag_name.map((tag, i) => <Badge key={i} style={styles.tag}><Text>{tag}</Text></Badge>)}
                 </CardItem>
                 : null}

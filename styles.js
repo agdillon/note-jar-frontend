@@ -11,11 +11,17 @@ export default StyleSheet.create({
   card: {
     width: '90%'
   },
+  cardItemAuthor: {
+    fontWeight: 'normal',
+    marginBottom: '-1%',
+    marginTop: '-7%'
+  },
   cardItemBody: {
     width: '100%'
   },
   cardText: {
-    width: '100%'
+    width: '100%',
+    fontSize: 18
   },
   container: {
     backgroundColor: 'transparent'
